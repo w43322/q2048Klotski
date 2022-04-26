@@ -5,13 +5,13 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define to 1 if you have the `arc4random_uniform' function. */
-/* #undef HAVE_ARC4RANDOM_UNIFORM */
+#define HAVE_ARC4RANDOM_UNIFORM 1
 
 /* define if the compiler supports basic C++11 syntax */
 #define HAVE_CXX11 1
 
 /* Define to 1 if you have the `drand48' function. */
-/* #define HAVE_DRAND48 1 */
+#define HAVE_DRAND48 1
 
 /* Define to 1 if you have the <fcntl.h> header file. */
 #define HAVE_FCNTL_H 1
