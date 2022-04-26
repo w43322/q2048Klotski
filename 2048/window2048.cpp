@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "mainwindow/mainwindow.h"
 
 #include "window2048.h"
 #include "ui_window2048.h"

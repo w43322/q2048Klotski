@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-#include "window2048.h"
+#include "2048/window2048.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

@@ -1,7 +1,7 @@
 #ifndef _2048_H
 #define _2048_H
 
-#include "base.h"
+#include "base/base.h"
 #include "2048-ai/2048ai.h"
 
 class Tile2048 : public BaseTile{};

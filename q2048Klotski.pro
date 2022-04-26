@@ -11,22 +11,22 @@ CONFIG += c++11
 SOURCES += \
     2048-ai/2048ai.cpp \
     2048/2048.cpp \
-    base.cpp \
+    base/base.cpp \
     main.cpp \
-    mainwindow.cpp \
+    mainwindow/mainwindow.cpp \
     2048/window2048.cpp
 
 HEADERS += \
     2048-ai/2048ai.h \
     2048-ai/config.h \
     2048/2048.h \
-    base.h \
-    mainwindow.h \
+    base/base.h \
+    mainwindow/mainwindow.h \
     2048-ai/platdefs.h \
     2048/window2048.h
 
 FORMS += \
-    mainwindow.ui \
+    mainwindow/mainwindow.ui \
     2048/window2048.ui
 
 # Default rules for deployment.
