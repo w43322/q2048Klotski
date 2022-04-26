@@ -5,7 +5,7 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define to 1 if you have the `arc4random_uniform' function. */
-#define HAVE_ARC4RANDOM_UNIFORM 1
+/*#define HAVE_ARC4RANDOM_UNIFORM 1*/
 
 /* define if the compiler supports basic C++11 syntax */
 #define HAVE_CXX11 1

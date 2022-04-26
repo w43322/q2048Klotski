@@ -6,7 +6,7 @@ void Tile::SetVal(int _v) { val = _v; }
 bool Tile::operator==(const Tile &other) const { return val == other.val; }
 
 Grid::Grid(uint8_t _w, uint8_t _h) : width(_w), height(_h) {}
-void Grid::DebugPrintGrid()
+/*void Grid::DebugPrintGrid()
 {
     QString LINE;
     for (uint8_t i = 0; i < height; ++i)
@@ -34,7 +34,7 @@ void Grid::DebugPrintGrid()
     for (uint8_t j = 0; j < width; ++j)
         LINE += "----+";
     qDebug().noquote() << LINE;
-}
+}*/
 bool Grid::IsFull()
 {
     for (uint8_t i = 0; i < height; ++i)
@@ -199,57 +199,65 @@ void Game::InitBoard()
 {
     grid.PutNewTileOnRandomLocation();
     grid.PutNewTileOnRandomLocation();
-    Print();
+    //Print();
 }
-void Game::Print()
+uint8_t Game::GetBestMove()
+{
+    freopen("NUL", "w", stdout);
+    uint8_t bestMove = find_best_move(grid.GetBoard());
+    freopen("CON", "w", stdout);
+    switch (bestMove)
+    {
+    case 0: // up
+        return 'w';
+    case 1: // down
+        return 's';
+    case 2: // left
+        return 'a';
+    case 3: // right
+        return 'd';
+    default:
+        return 0;
+    }
+}
+/*void Game::Print()
 {
     //qDebug() << "-New-Round-";
     if(!GameOver())
     {
-        qDebug() << "Score:" << score /*<< "Board:" << Qt::bin << grid.GetBoard()*/;
         grid.DebugPrintGrid();
-
-        freopen("NUL", "w", stdout);
-        uint8_t optimalDirection = find_best_move(grid.GetBoard());
-        freopen("CON", "w", stdout);
-
         QString MOVE = "N/A";
-        switch (optimalDirection)
+        uint8_t bestMove = GetBestMove();
+        switch (bestMove)
         {
-        case 0: // up
-            optimalDirection = 'w';
+        case 'w': // up
             MOVE = "UP";
             break;
-        case 1: // down
-            optimalDirection = 's';
+        case 's': // down
             MOVE = "DOWN";
             break;
-        case 2: // left
-            optimalDirection = 'a';
+        case 'a': // left
             MOVE = "LEFT";
             break;
-        case 3: // right
-            optimalDirection = 'd';
+        case 'd': // right
             MOVE = "RIGHT";
             break;
         }
-
         qDebug() << "Optimal Move:" << MOVE;
-
     }
     else
     {
         qDebug() << "Game Over!";
     }
     //qDebug() << "input direction: w, a, s, d:";
-}
+}*/
 void Game::Step(uint8_t direction)
 {
     if (grid.IsAbleToMerge(direction))
     {
         score += grid.Merge(direction);
         grid.PutNewTileOnRandomLocation();
-        Print();
+        //Print();
     }
     //else
     //    qDebug("\nCannot merge in this Direction!");

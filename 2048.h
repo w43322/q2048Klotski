@@ -38,7 +38,7 @@ class Grid
 {
 public:
     Grid(uint8_t _w, uint8_t _h);
-    void DebugPrintGrid();
+    //void DebugPrintGrid();
     bool IsFull();
     void PutNewTileOnRandomLocation();
     PairOfInt8 GetRandomEmptyLocation();
@@ -62,12 +62,13 @@ public:
     Game(int _w, int _h);
     bool GameOver();
     void InitBoard();
-    void Print();
+    //void Print();
     void Step(uint8_t direction);
     uint32_t GetScore(){return score;}
     uint8_t GetWidth(){return grid.GetWidth();}
     uint8_t GetHeight(){return grid.GetHeight();}
     uint8_t GetTileVal(PairOfInt8 loc){return grid.GetTileVal(loc);}
+    uint8_t GetBestMove();
 private:
     Grid grid;
     uint32_t score = 0;

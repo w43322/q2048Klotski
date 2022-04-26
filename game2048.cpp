@@ -8,6 +8,7 @@ Game2048::Game2048(QWidget *parent) :
 {
     ui->setupUi(this);
     SetScore();
+    SetHint();
     KeepAspectRatio();
     InitGridOfLabels();
     DrawGridOfLabels();
@@ -27,8 +28,6 @@ void Game2048::InitGridOfLabels()
 
 void Game2048::DrawGridOfLabels()
 {
-    // HERE
-    qDebug() << QString::number(TileLen * FontSizeToTileRatio);
     uint16_t x, y = BorderLen;
     for (uint8_t i = 0; i < GAME.GetHeight(); ++i, y += TileLen + BorderLen)
     {
@@ -37,8 +36,28 @@ void Game2048::DrawGridOfLabels()
         {
             PairOfInt8 loc = make_pair(i, j);
             uint8_t val = GAME.GetTileVal(loc);
-            GridOfLabels[loc].setText(QString::number(val));
-            GridOfLabels[loc].setStyleSheet(COMMON_STYLE + LABEL_STYLES[val] + "font-size:" + QString::number(TileLen * FontSizeToTileRatio) + "px;");
+            float FontSizeToTileRatio;
+            float BorderRaduisToTileRatio = 7.0f / 107;
+            switch (val)
+            {
+            case 12:case 13:case 14:case 15:
+                FontSizeToTileRatio = 30.0f / 107;
+                break;
+            case 10:case 11:
+                FontSizeToTileRatio = 35.0f / 107;
+                break;
+            case 7:case 8:case 9:
+                FontSizeToTileRatio = 45.0f / 107;
+                break;
+            default:
+                FontSizeToTileRatio = 55.0f / 107;
+            }
+            QString STYLE = COMMON_STYLE + LABEL_STYLES[val] + "font-size:" +
+                    QString::number((int)(TileLen * FontSizeToTileRatio)) + "px;"
+                    + "border-radius:" + QString::number((int)(TileLen * BorderRaduisToTileRatio)) + "px;";
+            QString DISP = val == 0 ? "" : QString::number(1 << val);
+            GridOfLabels[loc].setText(DISP);
+            GridOfLabels[loc].setStyleSheet(STYLE);
             GridOfLabels[loc].setGeometry(x, y, TileLen, TileLen);
         }
     }
@@ -65,7 +84,43 @@ void Game2048::keyPressEvent(QKeyEvent *event)
             break;
     }
     SetScore();
+    SetHint();
     DrawGridOfLabels();
+}
+
+void Game2048::SetHint()
+{
+    QString STYLE1 =
+    "style = '"
+    "font-size: 13px;"
+    "font-weight: bold;"
+    "color: #eee4da;'";
+    QString STYLE2 =
+    "style = '"
+    "font-size: 25px;"
+    "font-weight: bold;"
+    "color: white;'";
+    QString TEXT = "<font " + STYLE1 + ">HINT</font><br/>";
+    TEXT += "<font " + STYLE2 + ">";
+    switch (GAME.GetBestMove())
+    {
+    case 'w': // up
+        TEXT += "UP";
+        break;
+    case 's': // down
+        TEXT += "DOWN";
+        break;
+    case 'a': // left
+        TEXT += "LEFT";
+        break;
+    case 'd': // right
+        TEXT += "RIGHT";
+        break;
+    default:
+        TEXT += "N/A";
+    }
+    TEXT +="</font>";
+    ui->labelHint->setText(TEXT);
 }
 
 void Game2048::SetScore()
