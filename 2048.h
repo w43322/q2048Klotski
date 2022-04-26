@@ -45,6 +45,9 @@ public:
     uint16_t Merge(uint8_t direction);
     bool IsAbleToMerge(uint8_t direction);
     uint64_t GetBoard();
+    uint8_t GetWidth(){return width;}
+    uint8_t GetHeight(){return height;}
+    uint8_t GetTileVal(PairOfInt8 loc){return data[loc].GetVal();}
 private:
     void RotateLeft();
     void RotateRight();
@@ -61,8 +64,12 @@ public:
     void InitBoard();
     void Print();
     void Step(uint8_t direction);
+    uint32_t GetScore(){return score;}
+    uint8_t GetWidth(){return grid.GetWidth();}
+    uint8_t GetHeight(){return grid.GetHeight();}
+    uint8_t GetTileVal(PairOfInt8 loc){return grid.GetTileVal(loc);}
 private:
     Grid grid;
-    uint32_t score;
+    uint32_t score = 0;
 };
 #endif // _2048_H
