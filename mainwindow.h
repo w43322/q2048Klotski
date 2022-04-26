@@ -2,8 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QKeyEvent>
+#include <QDebug>
 
-#include "game2048.h"
+#include "2048.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,11 +19,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void on_pushButtonRun2048_clicked();
+    void keyPressEvent(QKeyEvent *);
+    Game GAME;
 
 private:
     Ui::MainWindow *ui;
-    Game2048 *uiGame2048;
+
+
 };
 #endif // MAINWINDOW_H
