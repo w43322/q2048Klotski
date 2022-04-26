@@ -12,22 +12,22 @@ SOURCES += \
     2048-ai/2048ai.cpp \
     2048.cpp \
     base.cpp \
-    game2048.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    window2048.cpp
 
 HEADERS += \
     2048-ai/2048ai.h \
     2048-ai/config.h \
     2048.h \
     base.h \
-    game2048.h \
     mainwindow.h \
-    2048-ai/platdefs.h
+    2048-ai/platdefs.h \
+    window2048.h
 
 FORMS += \
-    game2048.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    window2048.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

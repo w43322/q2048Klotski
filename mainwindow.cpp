@@ -15,7 +15,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonRun2048_clicked()
 {
-    uiGame2048 = new Game2048(this);
-    uiGame2048->show();
+    uiWindow2048 = new Window2048(this);
+    uiWindow2048->show();
     hide();
 }

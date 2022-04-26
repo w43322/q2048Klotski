@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Game2048</class>
- <widget class="QMainWindow" name="Game2048">
+ <class>Window2048</class>
+ <widget class="QMainWindow" name="Window2048">
   <property name="geometry">
    <rect>
     <x>0</x>

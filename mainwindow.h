@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-#include "game2048.h"
+#include "window2048.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,6 +22,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Game2048 *uiGame2048;
+    Window2048 *uiWindow2048;
 };
 #endif // MAINWINDOW_H

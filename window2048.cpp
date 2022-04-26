@@ -1,10 +1,10 @@
-#include "game2048.h"
-#include "ui_game2048.h"
+#include "window2048.h"
+#include "ui_window2048.h"
 
-Game2048::Game2048(QWidget *parent) :
+Window2048::Window2048(QWidget *parent) :
     QMainWindow(parent)
     , GAME(4, 4)
-    , ui(new Ui::Game2048)
+    , ui(new Ui::Window2048)
 {
     ui->setupUi(this);
     SetScore();
@@ -14,19 +14,19 @@ Game2048::Game2048(QWidget *parent) :
     DrawGridOfLabels();
 }
 
-Game2048::~Game2048()
+Window2048::~Window2048()
 {
     delete ui;
 }
 
-void Game2048::InitGridOfLabels()
+void Window2048::InitGridOfLabels()
 {
     for (uint8_t i = 0; i < GAME.GetHeight(); ++i)
         for (uint8_t j = 0; j < GAME.GetWidth(); ++j)
             GridOfLabels[make_pair(i, j)].setParent(ui->widgetGrid);
 }
 
-void Game2048::DrawGridOfLabels()
+void Window2048::DrawGridOfLabels()
 {
     uint16_t x, y = BorderLen;
     for (uint8_t i = 0; i < GAME.GetHeight(); ++i, y += TileLen + BorderLen)
@@ -63,7 +63,7 @@ void Game2048::DrawGridOfLabels()
     }
 }
 
-void Game2048::keyPressEvent(QKeyEvent *event)
+void Window2048::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key())
     {
@@ -88,7 +88,7 @@ void Game2048::keyPressEvent(QKeyEvent *event)
     DrawGridOfLabels();
 }
 
-void Game2048::SetHint()
+void Window2048::SetHint()
 {
     QString STYLE1 =
     "style = '"
@@ -123,7 +123,7 @@ void Game2048::SetHint()
     ui->labelHint->setText(TEXT);
 }
 
-void Game2048::SetScore()
+void Window2048::SetScore()
 {
     QString STYLE1 =
     "style = '"
@@ -141,7 +141,7 @@ void Game2048::SetScore()
     ui->labelScore->setText(TEXT);
 }
 
-void Game2048::KeepAspectRatio()
+void Window2048::KeepAspectRatio()
 {
     uint8_t hei = GAME.GetHeight(), wid = GAME.GetWidth();
     uint8_t uni;
@@ -155,14 +155,14 @@ void Game2048::KeepAspectRatio()
     DrawGridOfLabels();
 }
 
-void Game2048::SetBorderLenAndTileLen()
+void Window2048::SetBorderLenAndTileLen()
 {
     uint8_t wid = GAME.GetWidth();
     TileLen = ui->widgetGrid->width() / (BorderToTileRatio + BorderToTileRatio * wid + wid);
     BorderLen = TileLen * BorderToTileRatio;
 }
 
-void Game2048::resizeEvent(QResizeEvent *event)
+void Window2048::resizeEvent(QResizeEvent *event)
 {
     event->accept();
     KeepAspectRatio();

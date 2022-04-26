@@ -1,5 +1,5 @@
-#ifndef GAME2048_H
-#define GAME2048_H
+#ifndef WINDOW2048_H
+#define WINDOW2048_H
 
 #include <QMainWindow>
 #include <QKeyEvent>
@@ -30,16 +30,16 @@ const QString LABEL_STYLES[] =
 };
 
 namespace Ui {
-class Game2048;
+class Window2048;
 }
 
-class Game2048 : public QMainWindow
+class Window2048 : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit Game2048(QWidget *parent = nullptr);
-    ~Game2048();
+    explicit Window2048(QWidget *parent = nullptr);
+    ~Window2048();
 
     void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
     Game GAME;
@@ -51,7 +51,7 @@ protected:
 
 
 private:
-    Ui::Game2048 *ui;
+    Ui::Window2048 *ui;
     void KeepAspectRatio();
     void InitGridOfLabels();
     void DrawGridOfLabels();
@@ -62,4 +62,4 @@ private:
     uint16_t TileLen;
 };
 
-#endif // GAME2048_H
+#endif // WINDOW2048_H
