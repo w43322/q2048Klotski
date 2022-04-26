@@ -25,7 +25,7 @@ public:
     bool operator==(const BaseTile &other) const;
 private:
     uint8_t val;
-    friend class Tile;
+    friend class Tile2048;
 };
 
 class BaseGrid
@@ -42,7 +42,7 @@ private:
     uint8_t width;
     uint8_t height;
     MapOfTile data;
-    friend class Grid;
+    friend class Grid2048;
 };
 
 #endif // BASE_H

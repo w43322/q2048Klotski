@@ -28,7 +28,7 @@
         LINE += "----+";
     qDebug().noquote() << LINE;
 }*/
-bool Grid::IsFull()
+bool Grid2048::IsFull()
 {
     for (uint8_t i = 0; i < height; ++i)
         for (uint8_t j = 0; j < width; ++j)
@@ -36,7 +36,7 @@ bool Grid::IsFull()
                 return false;
     return true;
 }
-void Grid::PutNewTileOnRandomLocation()
+void Grid2048::PutNewTileOnRandomLocation()
 {
     if (IsFull())
         return;
@@ -44,7 +44,7 @@ void Grid::PutNewTileOnRandomLocation()
     data[location] = rand() < RAND_MAX * 0.9 ? 1 : 2;
     // printf("\nplacing at [%d][%d]", location.first, location.second);
 }
-PairOfInt8 Grid::GetRandomEmptyLocation()
+PairOfInt8 Grid2048::GetRandomEmptyLocation()
 {
     if (IsFull())
         return make_pair(-1, -1);
@@ -57,7 +57,7 @@ PairOfInt8 Grid::GetRandomEmptyLocation()
     }
     return make_pair(x, y);
 }
-uint16_t Grid::Merge(uint8_t direction)
+uint16_t Grid2048::Merge(uint8_t direction)
 {
     uint16_t res = 0;
     // pre-process
@@ -121,7 +121,7 @@ uint16_t Grid::Merge(uint8_t direction)
     }
     return res;
 }
-uint64_t Grid::GetBoard()
+uint64_t Grid2048::GetBoard()
 {
     uint64_t res = 0;
     for (int8_t i = height - 1; i >= 0; --i)
@@ -133,7 +133,7 @@ uint64_t Grid::GetBoard()
         }
     return res;
 }
-bool Grid::IsAbleToMerge(uint8_t direction)
+bool Grid2048::IsAbleToMerge(uint8_t direction)
 {
     map<PairOfInt8, BaseTile> dataCpy = data;
     Merge(direction);

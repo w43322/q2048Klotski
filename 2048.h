@@ -4,13 +4,13 @@
 #include "base.h"
 #include "2048-ai/2048ai.h"
 
-class Tile : public BaseTile{};
+class Tile2048 : public BaseTile{};
 
-class Grid : public BaseGrid
+class Grid2048 : public BaseGrid
 {
 public:
     //void DebugPrintGrid();
-    Grid(uint8_t _w, uint8_t _h): BaseGrid(_w, _h){}
+    Grid2048(uint8_t _w, uint8_t _h): BaseGrid(_w, _h){}
     bool IsFull();
     void PutNewTileOnRandomLocation();
     PairOfInt8 GetRandomEmptyLocation();
@@ -33,7 +33,7 @@ public:
     uint8_t GetTileVal(PairOfInt8 loc){return grid.GetTileVal(loc);}
     uint8_t GetBestMove();
 private:
-    Grid grid;
+    Grid2048 grid;
     uint32_t score = 0;
 };
 #endif // _2048_H
