@@ -206,7 +206,7 @@ void Game::Print()
     //qDebug() << "-New-Round-";
     if(!GameOver())
     {
-        qDebug() << "Score:" << score << "Board:" << Qt::bin << grid.GetBoard();
+        qDebug() << "Score:" << score /*<< "Board:" << Qt::bin << grid.GetBoard()*/;
         grid.DebugPrintGrid();
 
         freopen("NUL", "w", stdout);
