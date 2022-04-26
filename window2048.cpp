@@ -1,10 +1,12 @@
+#include "mainwindow.h"
+
 #include "window2048.h"
 #include "ui_window2048.h"
 
 Window2048::Window2048(QWidget *parent) :
     QMainWindow(parent)
-    , GAME(4, 4)
     , ui(new Ui::Window2048)
+    , GAME(4, 4)
 {
     ui->setupUi(this);
     SetScore();
@@ -79,6 +81,11 @@ void Window2048::keyPressEvent(QKeyEvent *event)
         case Qt::Key_D:case Qt::Key_Right:
             GAME.Step('d');
             break;
+        case Qt::Key_Escape:
+            ((MainWindow*)parent())->show();
+            hide();
+            delete this;
+            return;
     default:
             //qDebug() << event->key() << endl;
             break;

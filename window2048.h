@@ -42,7 +42,6 @@ public:
     ~Window2048();
 
     void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
-    Game2048 GAME;
     void SetScore();
     void SetHint();
 
@@ -60,6 +59,7 @@ private:
     float BorderToTileRatio = 14.0f / 107;
     uint16_t BorderLen;
     uint16_t TileLen;
+    Game2048 GAME;
 };
 
 #endif // WINDOW2048_H

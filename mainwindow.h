@@ -23,5 +23,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Window2048 *uiWindow2048;
+    friend class Window2048;
 };
 #endif // MAINWINDOW_H
