@@ -19,10 +19,10 @@ public:
     uint64_t GetBoard();
 };
 
-class Game
+class Game2048
 {
 public:
-    Game(uint8_t _w, uint8_t _h);
+    Game2048(uint8_t _w, uint8_t _h);
     bool GameOver();
     void InitBoard();
     //void Print();

@@ -1,33 +1,4 @@
 #include "2048.h"
-/*void Grid::DebugPrintGrid()
-{
-    QString LINE;
-    for (uint8_t i = 0; i < height; ++i)
-    {
-        LINE = "+";
-        for (uint8_t j = 0; j < width; ++j)
-            LINE += "----+";
-        qDebug().noquote() << LINE;
-        LINE = "|";
-        for (uint8_t j = 0; j < width; ++j)
-        {
-            uint16_t disp = 1 << data[make_pair(i, j)].GetVal();
-            char seg[6];
-            if (disp == 1)
-                sprintf(seg, "    |");
-            else if (disp <= 64)
-                sprintf(seg, "%3d |", disp);
-            else
-                sprintf(seg, "%4d|", disp);
-            LINE += seg;
-        }
-        qDebug().noquote() << LINE;
-    }
-    LINE = "+";
-    for (uint8_t j = 0; j < width; ++j)
-        LINE += "----+";
-    qDebug().noquote() << LINE;
-}*/
 bool Grid2048::IsFull()
 {
     for (uint8_t i = 0; i < height; ++i)
@@ -142,23 +113,23 @@ bool Grid2048::IsAbleToMerge(uint8_t direction)
     // printf("\nsizecmp: %lu %lu, res: %d", data.size(), dataCpy.size(),res);
     return res;
 }
-Game::Game(uint8_t _w, uint8_t _h) : grid(_w, _h), score(0)
+Game2048::Game2048(uint8_t _w, uint8_t _h) : grid(_w, _h), score(0)
 {
     InitBoard();
     init_tables();
 }
-bool Game::GameOver()
+bool Game2048::GameOver()
 {
     bool merge = grid.IsAbleToMerge('w') || grid.IsAbleToMerge('a') || grid.IsAbleToMerge('s') || grid.IsAbleToMerge('d');
     return !merge;
 }
-void Game::InitBoard()
+void Game2048::InitBoard()
 {
     grid.PutNewTileOnRandomLocation();
     grid.PutNewTileOnRandomLocation();
     //Print();
 }
-uint8_t Game::GetBestMove()
+uint8_t Game2048::GetBestMove()
 {
     freopen("NUL", "w", stdout);
     uint8_t bestMove = find_best_move(grid.GetBoard());
@@ -177,6 +148,46 @@ uint8_t Game::GetBestMove()
         return 0;
     }
 }
+void Game2048::Step(uint8_t direction)
+{
+    if (grid.IsAbleToMerge(direction))
+    {
+        score += grid.Merge(direction);
+        grid.PutNewTileOnRandomLocation();
+        //Print();
+    }
+    //else
+    //    qDebug("\nCannot merge in this Direction!");
+}
+/*void Grid::DebugPrintGrid()
+{
+    QString LINE;
+    for (uint8_t i = 0; i < height; ++i)
+    {
+        LINE = "+";
+        for (uint8_t j = 0; j < width; ++j)
+            LINE += "----+";
+        qDebug().noquote() << LINE;
+        LINE = "|";
+        for (uint8_t j = 0; j < width; ++j)
+        {
+            uint16_t disp = 1 << data[make_pair(i, j)].GetVal();
+            char seg[6];
+            if (disp == 1)
+                sprintf(seg, "    |");
+            else if (disp <= 64)
+                sprintf(seg, "%3d |", disp);
+            else
+                sprintf(seg, "%4d|", disp);
+            LINE += seg;
+        }
+        qDebug().noquote() << LINE;
+    }
+    LINE = "+";
+    for (uint8_t j = 0; j < width; ++j)
+        LINE += "----+";
+    qDebug().noquote() << LINE;
+}*/
 /*void Game::Print()
 {
     //qDebug() << "-New-Round-";
@@ -208,14 +219,3 @@ uint8_t Game::GetBestMove()
     }
     //qDebug() << "input direction: w, a, s, d:";
 }*/
-void Game::Step(uint8_t direction)
-{
-    if (grid.IsAbleToMerge(direction))
-    {
-        score += grid.Merge(direction);
-        grid.PutNewTileOnRandomLocation();
-        //Print();
-    }
-    //else
-    //    qDebug("\nCannot merge in this Direction!");
-}

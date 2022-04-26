@@ -42,7 +42,7 @@ public:
     ~Window2048();
 
     void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
-    Game GAME;
+    Game2048 GAME;
     void SetScore();
     void SetHint();
 
