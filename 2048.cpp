@@ -1,11 +1,4 @@
 #include "2048.h"
-Tile::Tile() : val(0) {}
-Tile::Tile(int _v) : val(_v) {}
-uint8_t Tile::GetVal() { return val; }
-void Tile::SetVal(int _v) { val = _v; }
-bool Tile::operator==(const Tile &other) const { return val == other.val; }
-
-Grid::Grid(uint8_t _w, uint8_t _h) : width(_w), height(_h) {}
 /*void Grid::DebugPrintGrid()
 {
     QString LINE;
@@ -142,50 +135,14 @@ uint64_t Grid::GetBoard()
 }
 bool Grid::IsAbleToMerge(uint8_t direction)
 {
-    map<PairOfInt8, Tile> dataCpy = data;
+    map<PairOfInt8, BaseTile> dataCpy = data;
     Merge(direction);
     bool res = dataCpy != data;
     data = dataCpy;
     // printf("\nsizecmp: %lu %lu, res: %d", data.size(), dataCpy.size(),res);
     return res;
 }
-void Grid::RotateLeft()
-{
-    map<PairOfInt8, Tile> newData;
-    for (int j = 0, _i = 0; _i < height; ++j, ++_i)
-    {
-        for (int i = 0, _j = width - 1; _j >= 0; ++i, --_j)
-            newData[make_pair(i, j)] = data[make_pair(_i, _j)];
-    }
-    data = newData;
-    swap(width, height);
-    // printf("\nafter Lrotate:");
-    // DebugPrint();
-}
-void Grid::RotateRight()
-{
-    map<PairOfInt8, Tile> newData;
-    for (int j = 0, _i = height - 1; _i >= 0; ++j, --_i)
-    {
-        for (int i = 0, _j = 0; _j < width; ++i, ++_j)
-            newData[make_pair(i, j)] = data[make_pair(_i, _j)];
-    }
-    data = newData;
-    swap(width, height);
-
-    // printf("\nafter Rrotate:");
-    // DebugPrint();
-}
-void Grid::HorizontalMirror()
-{
-    for (int i = 0; i < height; ++i)
-        for (int j = 0, _j = width - 1; j < _j; ++j, --_j)
-            swap(data[make_pair(i, j)], data[make_pair(i, _j)]);
-
-    // printf("\nafter Hmirror:");
-    // DebugPrint();
-}
-Game::Game(int _w, int _h) : grid(_w, _h), score(0)
+Game::Game(uint8_t _w, uint8_t _h) : grid(_w, _h), score(0)
 {
     InitBoard();
     init_tables();

@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     2048-ai/2048ai.cpp \
     2048.cpp \
+    base.cpp \
     game2048.cpp \
     main.cpp \
     mainwindow.cpp
@@ -19,6 +20,7 @@ HEADERS += \
     2048-ai/2048ai.h \
     2048-ai/config.h \
     2048.h \
+    base.h \
     game2048.h \
     mainwindow.h \
     2048-ai/platdefs.h
