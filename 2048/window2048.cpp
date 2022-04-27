@@ -46,12 +46,15 @@ void Window2048::on_pushButtonAuto_clicked()
     while (aut0)
     {
         uint8_t mov = GAME.GetBestMove();
+        if (!mov)
+            break;
         GAME.Step(mov);
         SetScore();
         SetHint();
         DrawGridOfLabels();
         Sleep(100);
     }
+    on_pushButtonStop_clicked();
 }
 
 void Window2048::InitGridOfLabels()
