@@ -17,6 +17,9 @@ public:
     uint16_t Merge(uint8_t direction);
     bool IsAbleToMerge(uint8_t direction);
     uint64_t GetBoard();
+    void RotateLeft();
+    void RotateRight();
+    void HorizontalMirror();
 };
 
 class Game2048

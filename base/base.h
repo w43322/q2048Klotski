@@ -36,9 +36,6 @@ public:
     uint8_t GetHeight(){return height;}
     uint8_t GetTileVal(PairOfInt8 loc){return data[loc].GetVal();}
 private:
-    void RotateLeft();
-    void RotateRight();
-    void HorizontalMirror();
     uint8_t width;
     uint8_t height;
     MapOfTile data;

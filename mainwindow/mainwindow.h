@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "2048/window2048.h"
+#include "klotski/windowklotski.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,9 +21,13 @@ public:
 private slots:
     void on_pushButtonRun2048_clicked();
 
+    void on_pushButtonRunKlotski_clicked();
+
 private:
     Ui::MainWindow *ui;
     Window2048 *uiWindow2048;
+    WindowKlotski *uiWindowKlotski;
     friend class Window2048;
+    friend class WindowKlotski;
 };
 #endif // MAINWINDOW_H

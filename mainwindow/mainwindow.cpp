@@ -19,3 +19,11 @@ void MainWindow::on_pushButtonRun2048_clicked()
     uiWindow2048->show();
     hide();
 }
+
+void MainWindow::on_pushButtonRunKlotski_clicked()
+{
+    uiWindowKlotski = new WindowKlotski(this);
+    uiWindowKlotski->show();
+    hide();
+}
+

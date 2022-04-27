@@ -115,6 +115,42 @@ bool Grid2048::IsAbleToMerge(uint8_t direction)
     // printf("\nsizecmp: %lu %lu, res: %d", data.size(), dataCpy.size(),res);
     return res;
 }
+void Grid2048::RotateLeft()
+{
+    map<PairOfInt8, BaseTile> newData;
+    for (int j = 0, _i = 0; _i < height; ++j, ++_i)
+    {
+        for (int i = 0, _j = width - 1; _j >= 0; ++i, --_j)
+            newData[make_pair(i, j)] = data[make_pair(_i, _j)];
+    }
+    data = newData;
+    swap(width, height);
+    // printf("\nafter Lrotate:");
+    // DebugPrint();
+}
+void Grid2048::RotateRight()
+{
+    map<PairOfInt8, BaseTile> newData;
+    for (int j = 0, _i = height - 1; _i >= 0; ++j, --_i)
+    {
+        for (int i = 0, _j = 0; _j < width; ++i, ++_j)
+            newData[make_pair(i, j)] = data[make_pair(_i, _j)];
+    }
+    data = newData;
+    swap(width, height);
+
+    // printf("\nafter Rrotate:");
+    // DebugPrint();
+}
+void Grid2048::HorizontalMirror()
+{
+    for (int i = 0; i < height; ++i)
+        for (int j = 0, _j = width - 1; j < _j; ++j, --_j)
+            swap(data[make_pair(i, j)], data[make_pair(i, _j)]);
+
+    // printf("\nafter Hmirror:");
+    // DebugPrint();
+}
 Game2048::Game2048(uint8_t _w, uint8_t _h) : grid(_w, _h), score(0)
 {
     InitBoard();
