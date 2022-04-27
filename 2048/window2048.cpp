@@ -6,19 +6,38 @@
 Window2048::Window2048(QWidget *parent) :
     QMainWindow(parent)
     , ui(new Ui::Window2048)
-    , GAME(4, 4)
+    , GAME(AskFor("Width", "Please Select Width:", {"4","5","6","7","8","9","10"}, 4, parent)
+         , AskFor("Height", "Please Select Height:", {"4","5","6","7","8","9","10"}, 4, parent))
 {
     ui->setupUi(this);
-    SetScore();
-    SetHint();
-    KeepAspectRatio();
-    InitGridOfLabels();
-    DrawGridOfLabels();
+    InitSetup();
 }
 
 Window2048::~Window2048()
 {
     delete ui;
+}
+
+void Window2048::InitSetup()
+{
+    hint = 0;
+    aut0 = 0;
+    SetScore();
+    SetHint();
+    KeepAspectRatio();
+    InitGridOfLabels();
+    DrawGridOfLabels();
+    if (GAME.GetWidth() != 4 || GAME.GetHeight() != 4)
+        ui->pushButtonHint->hide();
+    else
+        ui->pushButtonHint->show();
+}
+
+void Window2048::on_pushButtonNewGame_clicked()
+{
+    GAME = Game2048(AskFor("Width", "Please Select Width:", {"4","5","6","7","8","9","10"}, 4, this)
+                    , AskFor("Height", "Please Select Height:", {"4","5","6","7","8","9","10"}, 4, this));
+    InitSetup();
 }
 
 void Window2048::on_pushButtonHint_clicked()
@@ -59,9 +78,14 @@ void Window2048::on_pushButtonAuto_clicked()
 
 void Window2048::InitGridOfLabels()
 {
+    GridOfLabels.clear();
     for (uint8_t i = 0; i < GAME.GetHeight(); ++i)
         for (uint8_t j = 0; j < GAME.GetWidth(); ++j)
-            GridOfLabels[make_pair(i, j)].setParent(ui->widgetGrid);
+        {
+            PairOfInt8 loc = make_pair(i, j);
+            GridOfLabels[loc].setParent(ui->widgetGrid);
+            GridOfLabels[loc].show();
+        }
 }
 
 void Window2048::DrawGridOfLabels()
@@ -75,7 +99,6 @@ void Window2048::DrawGridOfLabels()
             PairOfInt8 loc = make_pair(i, j);
             uint8_t val = GAME.GetTileVal(loc);
             float FontSizeToTileRatio;
-            float BorderRaduisToTileRatio = 7.0f / 107;
             switch (val)
             {
             case 12:case 13:case 14:case 15:
@@ -230,3 +253,22 @@ void Window2048::Sleep(uint32_t msec)
     while(QTime::currentTime()<dieTime)
         QCoreApplication::processEvents(QEventLoop::AllEvents,100);
 }
+
+uint8_t Window2048::AskFor(const QString& Title,
+                       const QString& Label,
+                       const QStringList& Options,
+                       uint8_t defVal,
+                       QWidget* parent)
+{
+    bool isok;
+    QString STR = QInputDialog::getItem(parent,
+                                        Title,
+                                        Label,
+                                        Options,
+                                        0,
+                                        false,
+                                        &isok);
+    return isok ? STR.toUInt() : defVal;
+}
+
+

@@ -6,9 +6,12 @@
 #include <QDebug>
 #include <QLabel>
 #include <QTime>
+#include <QInputDialog>
 
 #include "2048.h"
 
+const float BorderToTileRatio = 14.0f / 107;
+const float BorderRaduisToTileRatio = 7.0f / 107;
 const QString COMMON_STYLE = "qproperty-alignment: AlignCenter; font-weight: bold;";
 const QString LABEL_STYLES[] =
 {
@@ -57,15 +60,22 @@ private slots:
 
     void on_pushButtonStop_clicked();
 
+    void on_pushButtonNewGame_clicked();
+
 private:
     Ui::Window2048 *ui;
+    void InitSetup();
     void KeepAspectRatio();
     void InitGridOfLabels();
     void DrawGridOfLabels();
     void SetBorderLenAndTileLen();
     void Sleep(uint32_t);
+    uint8_t AskFor(const QString& Title,
+                           const QString& Label,
+                           const QStringList& Options,
+                           uint8_t defVal,
+                           QWidget* parent);
     map<PairOfInt8, QLabel> GridOfLabels;
-    float BorderToTileRatio = 14.0f / 107;
     uint16_t BorderLen;
     uint16_t TileLen;
     Game2048 GAME;
