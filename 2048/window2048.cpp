@@ -30,11 +30,19 @@ void Window2048::on_pushButtonHint_clicked()
 void Window2048::on_pushButtonStop_clicked()
 {
     aut0 = false;
+    ui->pushButtonNewGame->setEnabled(true);
+    ui->pushButtonAuto->setEnabled(true);
+    ui->pushButtonHint->setEnabled(true);
+    ui->pushButtonStop->setEnabled(false);
 }
 
 void Window2048::on_pushButtonAuto_clicked()
 {
     aut0 = true;
+    ui->pushButtonNewGame->setEnabled(false);
+    ui->pushButtonAuto->setEnabled(false);
+    ui->pushButtonHint->setEnabled(false);
+    ui->pushButtonStop->setEnabled(true);
     while (aut0)
     {
         uint8_t mov = GAME.GetBestMove();
@@ -92,6 +100,8 @@ void Window2048::DrawGridOfLabels()
 
 void Window2048::keyPressEvent(QKeyEvent *event)
 {
+    if (aut0)
+        return;
     switch (event->key())
     {
         case Qt::Key_W:case Qt::Key_Up:
