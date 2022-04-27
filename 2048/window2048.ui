@@ -146,7 +146,7 @@ QPushButton:pressed
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="pushButtonNewGame">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -159,7 +159,7 @@ QPushButton:pressed
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="pushButtonHint">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -180,10 +180,24 @@ QPushButton:pressed
          </sizepolicy>
         </property>
         <property name="text">
-         <string>TextLabel</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonAuto">
+        <property name="text">
+         <string>Auto</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonStop">
+        <property name="text">
+         <string>Stop</string>
         </property>
        </widget>
       </item>
@@ -197,7 +211,7 @@ QPushButton:pressed
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>28</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>

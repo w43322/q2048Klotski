@@ -21,6 +21,31 @@ Window2048::~Window2048()
     delete ui;
 }
 
+void Window2048::on_pushButtonHint_clicked()
+{
+    hint = !hint;
+    SetHint();
+}
+
+void Window2048::on_pushButtonStop_clicked()
+{
+    aut0 = false;
+}
+
+void Window2048::on_pushButtonAuto_clicked()
+{
+    aut0 = true;
+    while (aut0)
+    {
+        uint8_t mov = GAME.GetBestMove();
+        GAME.Step(mov);
+        SetScore();
+        SetHint();
+        DrawGridOfLabels();
+        Sleep(100);
+    }
+}
+
 void Window2048::InitGridOfLabels()
 {
     for (uint8_t i = 0; i < GAME.GetHeight(); ++i)
@@ -97,6 +122,13 @@ void Window2048::keyPressEvent(QKeyEvent *event)
 
 void Window2048::SetHint()
 {
+    if (hint == 0)
+    {
+        ui->labelHint->hide();
+        ui->pushButtonAuto->hide();
+        ui->pushButtonStop->hide();
+        return;
+    }
     QString STYLE1 =
     "style = '"
     "font-size: 13px;"
@@ -128,6 +160,9 @@ void Window2048::SetHint()
     }
     TEXT +="</font>";
     ui->labelHint->setText(TEXT);
+    ui->labelHint->show();
+    ui->pushButtonAuto->show();
+    ui->pushButtonStop->show();
 }
 
 void Window2048::SetScore()
@@ -174,4 +209,11 @@ void Window2048::resizeEvent(QResizeEvent *event)
     event->accept();
     KeepAspectRatio();
     DrawGridOfLabels();
+}
+
+void Window2048::Sleep(uint32_t msec)
+{
+    QTime dieTime=QTime::currentTime().addMSecs(msec);
+    while(QTime::currentTime()<dieTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents,100);
 }

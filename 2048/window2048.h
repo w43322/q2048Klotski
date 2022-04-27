@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <QDebug>
 #include <QLabel>
+#include <QTime>
 
 #include "2048.h"
 
@@ -49,17 +50,27 @@ protected:
     virtual void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
 
 
+private slots:
+    void on_pushButtonHint_clicked();
+
+    void on_pushButtonAuto_clicked();
+
+    void on_pushButtonStop_clicked();
+
 private:
     Ui::Window2048 *ui;
     void KeepAspectRatio();
     void InitGridOfLabels();
     void DrawGridOfLabels();
     void SetBorderLenAndTileLen();
+    void Sleep(uint32_t);
     map<PairOfInt8, QLabel> GridOfLabels;
     float BorderToTileRatio = 14.0f / 107;
     uint16_t BorderLen;
     uint16_t TileLen;
     Game2048 GAME;
+    bool hint = 0;
+    bool aut0 = 0;
 };
 
 #endif // WINDOW2048_H

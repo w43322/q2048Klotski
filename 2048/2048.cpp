@@ -106,6 +106,8 @@ uint64_t Grid2048::GetBoard()
 }
 bool Grid2048::IsAbleToMerge(uint8_t direction)
 {
+    if (direction != 'w' && direction != 'a' && direction != 's' && direction != 'd')
+        return false;
     map<PairOfInt8, BaseTile> dataCpy = data;
     Merge(direction);
     bool res = dataCpy != data;
