@@ -3,7 +3,15 @@
 
 #include "base/base.h"
 
-class TileKlotski : public BaseTile{};
+class TileKlotski : public BaseTile
+{
+public:
+    uint8_t GetTileWidth(){return wid;}
+    uint8_t GetTileHeight(){return hei;}
+private:
+    uint8_t wid;
+    uint8_t hei;
+};
 
 class GridKlotski : public BaseGrid
 {
