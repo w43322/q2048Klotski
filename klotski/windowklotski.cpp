@@ -68,7 +68,7 @@ void WindowKlotski::keyPressEvent(QKeyEvent *event)
             break;
     }
     //SetStep();
-    //DrawGridOfLabels();
+    DrawGridOfLabels();
 }
 
 void WindowKlotski::InitGridOfLabels()
@@ -117,7 +117,7 @@ void WindowKlotski::KeepAspectRatio()
     ui->widgetGrid->setFixedHeight(uni * hei);
     ui->widgetGrid->setFixedWidth(uni * wid);
     SetBorderLenAndTileLen();
-    //DrawGridOfLabels();
+    DrawGridOfLabels();
 }
 
 void WindowKlotski::SetBorderLenAndTileLen()
