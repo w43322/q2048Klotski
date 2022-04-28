@@ -244,7 +244,6 @@ void Window2048::resizeEvent(QResizeEvent *event)
 {
     event->accept();
     KeepAspectRatio();
-    DrawGridOfLabels();
 }
 
 void Window2048::Sleep(uint32_t msec)

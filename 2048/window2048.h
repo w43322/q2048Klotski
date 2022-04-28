@@ -10,8 +10,6 @@
 
 #include "2048.h"
 
-const float BorderToTileRatio = 14.0f / 107;
-const float BorderRaduisToTileRatio = 7.0f / 107;
 const QString COMMON_STYLE = "qproperty-alignment: AlignCenter; font-weight: bold;";
 const QString LABEL_STYLES[] =
 {
@@ -76,6 +74,8 @@ private:
     Game2048 GAME;
     bool hint = 0;
     bool aut0 = 0;
+    const float BorderToTileRatio = 14.0f / 107;
+    const float BorderRaduisToTileRatio = 7.0f / 107;
 };
 
 #endif // WINDOW2048_H

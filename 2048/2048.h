@@ -4,8 +4,6 @@
 #include "base/base.h"
 #include "2048-ai/2048ai.h"
 
-class Tile2048 : public BaseTile{};
-
 class Grid2048 : public BaseGrid
 {
 public:
@@ -20,6 +18,9 @@ public:
     void RotateLeft();
     void RotateRight();
     void HorizontalMirror();
+    uint8_t GetTileVal(PairOfInt8 loc){return data[loc].GetVal();}
+private:
+    map<PairOfInt8, BaseTile> data;
 };
 
 class Game2048
