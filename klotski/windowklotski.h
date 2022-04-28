@@ -24,6 +24,8 @@ protected:
     virtual void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
 
 private:
+    void InitSetup();
+    void SetStep();
     void InitGridOfLabels();
     void DrawGridOfLabels();
     void KeepAspectRatio();
@@ -35,6 +37,7 @@ private:
                            QWidget* parent);
     Ui::WindowKlotski *ui;
     map<PairOfInt8, QLabel> GridOfLabels;
+    PairOfInt8 SelectedLoc;
     GameKlotski GAME;
     uint16_t BorderLen;
     uint16_t TileLen;

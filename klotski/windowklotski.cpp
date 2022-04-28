@@ -9,7 +9,14 @@ WindowKlotski::WindowKlotski(QWidget *parent) :
     ,GAME(AskFor("Width", "Please Select Width:", {"横刀立马", "指挥若定", "数字华容道"}, "横刀立马", parent))
 {
     ui->setupUi(this);
+    InitSetup();
+}
+
+void WindowKlotski::InitSetup()
+{
     GAME.Update();
+    SelectedLoc = GAME.NextAdjRight(make_pair(0, 0));
+    SetStep();
     KeepAspectRatio();
     InitGridOfLabels();
     DrawGridOfLabels();
@@ -47,18 +54,30 @@ void WindowKlotski::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key())
     {
-        /*case Qt::Key_W:case Qt::Key_Up:
-            GAME.Step('w');
+        case Qt::Key_Up:
+            SelectedLoc = GAME.NextAdjUp(SelectedLoc);
             break;
-        case Qt::Key_A:case Qt::Key_Left:
-            GAME.Step('a');
+        case Qt::Key_Left:
+            SelectedLoc = GAME.NextAdjLeft(SelectedLoc);
             break;
-        case Qt::Key_S:case Qt::Key_Down:
-            GAME.Step('s');
+        case Qt::Key_Down:
+            SelectedLoc = GAME.NextAdjDown(SelectedLoc);
             break;
-        case Qt::Key_D:case Qt::Key_Right:
-            GAME.Step('d');
-            break;*/
+        case Qt::Key_Right:
+            SelectedLoc = GAME.NextAdjRight(SelectedLoc);
+            break;
+        case Qt::Key_W:
+            SelectedLoc = GAME.Move(SelectedLoc,'w');
+            break;
+        case Qt::Key_A:
+            SelectedLoc = GAME.Move(SelectedLoc,'a');
+            break;
+        case Qt::Key_S:
+            SelectedLoc = GAME.Move(SelectedLoc,'s');
+            break;
+        case Qt::Key_D:
+            SelectedLoc = GAME.Move(SelectedLoc,'d');
+            break;
         case Qt::Key_Escape:
             ((MainWindow*)parent())->show();
             hide();
@@ -68,7 +87,7 @@ void WindowKlotski::keyPressEvent(QKeyEvent *event)
             //qDebug() << event->key() << endl;
             break;
     }
-    //SetStep();
+    SetStep();
     DrawGridOfLabels();
 }
 
@@ -104,6 +123,8 @@ void WindowKlotski::DrawGridOfLabels()
                     QString::number((int)(TileLen * FontSizeToTileRatio)) + "px;"
                     + "border-radius:" + QString::number((int)(TileLen * BorderRaduisToTileRatio)) + "px;";
             QString DISP = GAME.TileIsAdj(loc) ? "ADJ" : QString::number(val);
+            if (loc == SelectedLoc)
+                DISP = "SEL";
             GridOfLabels[loc].setText(DISP);
             GridOfLabels[loc].setStyleSheet(STYLE);
             GridOfLabels[loc].setGeometry(x, y, TileLen * wid + BorderLen * (wid - 1), TileLen * hei + BorderLen * (hei - 1));
@@ -131,4 +152,22 @@ void WindowKlotski::SetBorderLenAndTileLen()
     uint8_t wid = GAME.GetWidth();
     TileLen = ui->widgetGrid->width() / (BorderToTileRatio + BorderToTileRatio * wid + wid);
     BorderLen = TileLen * BorderToTileRatio;
+}
+
+void WindowKlotski::SetStep()
+{
+    QString STYLE1 =
+    "style = '"
+    "font-size: 13px;"
+    "font-weight: bold;"
+    "color: #eee4da;'";
+    QString STYLE2 =
+    "style = '"
+    "font-size: 25px;"
+    "font-weight: bold;"
+    "color: white;'";
+    QString TEXT = "<font " + STYLE1 + ">STEP</font><br/>";
+    TEXT += "<font " + STYLE2 + ">";
+    TEXT += QString::number(GAME.GetStep()) + "</font>";
+    ui->labelScore->setText(TEXT);
 }

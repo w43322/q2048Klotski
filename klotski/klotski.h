@@ -38,7 +38,7 @@ public:
     void UpdateEmpty();
     void UpdateAdj();
     bool IsAbleToMove(PairOfInt8 loc, uint8_t direction);
-    void Move(PairOfInt8 loc, uint8_t direction);
+    PairOfInt8 Move(PairOfInt8 loc, uint8_t direction);
 private:
     map<PairOfInt8, TileKlotski> data;
 };
@@ -58,7 +58,11 @@ public:
     bool TileIsAdj(PairOfInt8 loc){return grid.TileIsAdj(loc);}
     bool DataIsInitialized(){return !GameSetData.empty();}
     void Update(){grid.UpdateEmpty();grid.UpdateAdj();}
-    void Move(PairOfInt8 loc, uint8_t direction);
+    PairOfInt8 Move(PairOfInt8 loc, uint8_t direction); // returns the new location
+    PairOfInt8 NextAdjUp(PairOfInt8 loc);
+    PairOfInt8 NextAdjDown(PairOfInt8 loc);
+    PairOfInt8 NextAdjLeft(PairOfInt8 loc);
+    PairOfInt8 NextAdjRight(PairOfInt8 loc);
     map<QString, QStringList> GameSetData =
     {
         {"横刀立马",{"4", "5", "1,0,0,1,2|0,0,1,2,2|1,0,3,1,2|1,2,0,1,2|2,2,1,2,1|1,2,3,1,2|3,3,1,1,1|3,3,2,1,1|3,4,0,1,1|3,4,3,1,1", "0,3,1"}},

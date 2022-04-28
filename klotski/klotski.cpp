@@ -93,17 +93,19 @@ void GridKlotski::UpdateAdj()
     }
 }
 
-void GameKlotski::Move(PairOfInt8 loc, uint8_t direction)
+PairOfInt8 GameKlotski::Move(PairOfInt8 loc, uint8_t direction)
 {
+    PairOfInt8 res = loc;
     if (grid.IsAbleToMove(loc, direction))
     {
         ++step;
-        grid.Move(loc, direction);
+        res = grid.Move(loc, direction);
         Update();
     }
+    return res;
 }
 
-void GridKlotski::Move(PairOfInt8 loc, uint8_t direction)
+PairOfInt8 GridKlotski::Move(PairOfInt8 loc, uint8_t direction)
 {
     int i = loc.first, j = loc.second;
     uint8_t nx = i, ny = j;
@@ -122,10 +124,76 @@ void GridKlotski::Move(PairOfInt8 loc, uint8_t direction)
         ny = j + 1;
         break;
     default:
-        return;
+        return loc;
     }
-    data[make_pair(nx, ny)] = data[loc];
+    PairOfInt8 newloc = make_pair(nx, ny);
+    data[newloc] = data[loc];
     for (uint8_t x = i; x < i + GetTileHeight(loc); ++x)
         for (uint8_t y = j; y < j + GetTileWidth(loc); ++y)
             data[make_pair(x, y)] = TileKlotski();
+    return newloc;
+}
+
+PairOfInt8 GameKlotski::NextAdjLeft(PairOfInt8 loc)
+{
+    uint8_t wid = GetWidth(), hei = GetHeight();
+    int8_t i = loc.first - 1, j = loc.second;
+    for (; ; j = (j + wid - 1) % wid)
+    {
+        for (; i >= 0; --i)
+        {
+            PairOfInt8 res = make_pair(i, j);
+            if (grid.TileIsAdj(res))
+                return res;
+        }
+        i = hei - 1;
+    }
+}
+
+PairOfInt8 GameKlotski::NextAdjRight(PairOfInt8 loc)
+{
+    uint8_t wid = GetWidth(), hei = GetHeight();
+    int8_t i = loc.first + 1, j = loc.second;
+    for (; ; j = (j + 1) % wid)
+    {
+        for (; i < hei; ++i)
+        {
+            PairOfInt8 res = make_pair(i, j);
+            if (grid.TileIsAdj(res))
+                return res;
+        }
+        i = 0;
+    }
+}
+
+PairOfInt8 GameKlotski::NextAdjUp(PairOfInt8 loc)
+{
+    uint8_t wid = GetWidth(), hei = GetHeight();
+    int8_t i = loc.first, j = loc.second - 1;
+    for (; ; i = (i + hei - 1) % hei)
+    {
+        for (; j >= 0; --j)
+        {
+            PairOfInt8 res = make_pair(i, j);
+            if (grid.TileIsAdj(res))
+                return res;
+        }
+        j = wid - 1;
+    }
+}
+
+PairOfInt8 GameKlotski::NextAdjDown(PairOfInt8 loc)
+{
+    uint8_t wid = GetWidth(), hei = GetHeight();
+    int8_t i = loc.first, j = loc.second + 1;
+    for (; ; i = (i + 1) % hei)
+    {
+        for (; j < wid; ++j)
+        {
+            PairOfInt8 res = make_pair(i, j);
+            if (grid.TileIsAdj(res))
+                return res;
+        }
+        j = 0;
+    }
 }
