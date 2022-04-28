@@ -45,21 +45,14 @@ public:
     explicit Window2048(QWidget *parent = nullptr);
     ~Window2048();
 
-    void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
-    void SetScore();
-    void SetHint();
-
 protected:
-    virtual void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
-
+    virtual void resizeEvent(QResizeEvent *) Q_DECL_OVERRIDE;
+    virtual void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
 
 private slots:
     void on_pushButtonHint_clicked();
-
     void on_pushButtonAuto_clicked();
-
     void on_pushButtonStop_clicked();
-
     void on_pushButtonNewGame_clicked();
 
 private:
@@ -70,6 +63,8 @@ private:
     void DrawGridOfLabels();
     void SetBorderLenAndTileLen();
     void Sleep(uint32_t);
+    void SetScore();
+    void SetHint();
     uint8_t AskFor(const QString& Title,
                            const QString& Label,
                            const QStringList& Options,

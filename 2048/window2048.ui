@@ -24,7 +24,7 @@
 
 QWidget#widgetGrid
 {
-background: #bbada0;
+    background: #bbada0;
 }
 
 QLabel#labelBest, QLabel#labelHint, QLabel#labelScore
