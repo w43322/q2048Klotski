@@ -6,9 +6,15 @@
 WindowKlotski::WindowKlotski(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::WindowKlotski)
-    ,GAME(AskFor("Width", "Please Select Width:", {"横刀立马", "指挥若定", "数字华容道"}, "横刀立马", parent))
+    ,GAME(AskFor("Width", "Please Select Width:", {"横刀立马", "指挥若定"/*, "数字华容道"*/}, "横刀立马", parent))
 {
     ui->setupUi(this);
+    InitSetup();
+}
+
+void WindowKlotski::on_pushButton_clicked()
+{
+    GAME = AskFor("Width", "Please Select Width:", {"横刀立马", "指挥若定"/*, "数字华容道"*/}, "横刀立马", this);
     InitSetup();
 }
 
@@ -121,10 +127,12 @@ void WindowKlotski::DrawGridOfLabels()
             uint8_t val = GAME.GetTileVal(loc);
             QString STYLE = COMMON_STYLE + LABEL_STYLES[val] + "font-size:" +
                     QString::number((int)(TileLen * FontSizeToTileRatio)) + "px;"
-                    + "border-radius:" + QString::number((int)(TileLen * BorderRaduisToTileRatio)) + "px;";
-            QString DISP = GAME.TileIsAdj(loc) ? "ADJ" : QString::number(val);
+                    + "border-radius:" + QString::number(BorderLen) + "px;";
+            QString DISP = QString::number(val);
             if (loc == SelectedLoc)
-                DISP = "SEL";
+                STYLE += "border-radius:0px;border-style:ridge;border-width:"
+                        + QString::number((int)(0.618 * BorderLen))
+                        + "px;border-color:#8f7a66";
             GridOfLabels[loc].setText(DISP);
             GridOfLabels[loc].setStyleSheet(STYLE);
             GridOfLabels[loc].setGeometry(x, y, TileLen * wid + BorderLen * (wid - 1), TileLen * hei + BorderLen * (hei - 1));
