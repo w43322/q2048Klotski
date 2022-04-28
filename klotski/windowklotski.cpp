@@ -92,13 +92,15 @@ void WindowKlotski::DrawGridOfLabels()
         {
             PairOfInt8 loc = make_pair(i, j);
             uint8_t val = GAME.GetTileVal(loc);
-            /*QString STYLE = COMMON_STYLE + LABEL_STYLES[val] + "font-size:" +
+            uint8_t wid = GAME.GetTileWidth(loc);
+            uint8_t hei = GAME.GetTileHeight(loc);
+            QString STYLE = COMMON_STYLE + LABEL_STYLES[val] + "font-size:" +
                     QString::number((int)(TileLen * FontSizeToTileRatio)) + "px;"
-                    + "border-radius:" + QString::number((int)(TileLen * BorderRaduisToTileRatio)) + "px;";*/
-            QString DISP = val == 0 ? "" : QString::number(1 << val);
+                    + "border-radius:" + QString::number((int)(TileLen * BorderRaduisToTileRatio)) + "px;";
+            QString DISP = QString::number(val);
             GridOfLabels[loc].setText(DISP);
-            /*GridOfLabels[loc].setStyleSheet(STYLE);*/
-            GridOfLabels[loc].setGeometry(x, y, TileLen * GAME.GetTileWidth(loc), TileLen * GAME.GetTileHeight(loc));
+            GridOfLabels[loc].setStyleSheet(STYLE);
+            GridOfLabels[loc].setGeometry(x, y, TileLen * wid + BorderLen * (wid - 1), TileLen * hei + BorderLen * (hei - 1));
             GridOfLabels[loc].show();
         }
     }
