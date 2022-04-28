@@ -2,6 +2,9 @@
 #define WINDOWKLOTSKI_H
 
 #include <QMainWindow>
+#include <QInputDialog>
+
+#include "klotski.h"
 
 namespace Ui {
 class WindowKlotski;
@@ -16,7 +19,13 @@ public:
     ~WindowKlotski();
 
 private:
+    QString AskFor(const QString& Title,
+                           const QString& Label,
+                           const QStringList& Options,
+                           const QString& defVal,
+                           QWidget* parent);
     Ui::WindowKlotski *ui;
+    //GameKlotski GAME;
 };
 
 #endif // WINDOWKLOTSKI_H

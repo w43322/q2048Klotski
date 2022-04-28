@@ -3,6 +3,16 @@
 
 #include "base/base.h"
 
+#include <QStringList>
+
+/*map<QString, QStringList> GameSetData;
+void InitGameSetData()
+{
+    if (!GameSetData.empty())
+        return;
+    GameSetData["横刀立马"] = (QStringList){"1","2","3"};
+}*/
+
 class TileKlotski : public BaseTile
 {
 public:
@@ -23,7 +33,7 @@ public:
 class GameKlotski
 {
 public:
-    GameKlotski(uint8_t _w, uint8_t _h);
+    //GameKlotski(const QString&);
     //void Print();
     uint32_t GetStep(){return step;}
     uint8_t GetWidth(){return grid.GetWidth();}
