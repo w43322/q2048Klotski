@@ -127,7 +127,7 @@ void WindowKlotski::DrawGridOfLabels()
             uint8_t val = GAME.GetTileVal(loc);
             QString STYLE = COMMON_STYLE + LABEL_STYLES[val] + "font-size:" +
                     QString::number((int)(TileLen * FontSizeToTileRatio)) + "px;"
-                    + "border-radius:" + QString::number(BorderLen) + "px;";
+                    + "border-radius:" + QString::number((int)(TileLen * BorderRaduisToTileRatio)) + "px;";
             QString DISP = QString::number(val);
             if (loc == SelectedLoc)
                 STYLE += "border-radius:0px;border-style:ridge;border-width:"
