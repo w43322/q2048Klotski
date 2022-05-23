@@ -67,11 +67,8 @@ void Window2048::on_pushButtonAuto_clicked()
         uint8_t mov = GAME.GetBestMove();
         if (!mov)
             break;
-        GAME.Step(mov);
-        SetScore();
-        SetHint();
-        DrawGridOfLabels();
-        Sleep(100);
+        ProcessPress(mov);
+        Sleep(!anim);
     }
     on_pushButtonStop_clicked();
 }
@@ -302,7 +299,7 @@ void Window2048::ProcessPress(uint8_t direction)
 {
     if (anim)
     {
-        ui->checkBox->setEnabled(false);
+        ui->checkBox->setEnabled(aut0|false);
         inAnimation = true;
         Grid2048 oldGrid = AnimateParallelMove(direction);
         GAME.Step(direction);

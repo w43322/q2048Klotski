@@ -60,7 +60,7 @@ private:
     Game2048 GAME;
     bool hint = 0;
     bool aut0 = 0;
-    bool anim = 0;
+    bool anim = 1;
     bool inAnimation = 0;
     const int AnimationDuration = 300;
     const float BorderToTileRatio = 14.0f / 107;
