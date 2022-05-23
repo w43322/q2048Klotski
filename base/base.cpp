@@ -1,7 +1,7 @@
 #include "base.h"
 BaseTile::BaseTile() : val(0) {}
 BaseTile::BaseTile(uint8_t _v) : val(_v) {}
-uint8_t BaseTile::GetVal() { return val; }
+uint8_t BaseTile::GetVal() const { return val; }
 void BaseTile::SetVal(uint8_t _v) { val = _v; }
 bool BaseTile::operator==(const BaseTile &other) const { return val == other.val; }
 

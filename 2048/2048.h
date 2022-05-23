@@ -18,7 +18,8 @@ public:
     void RotateLeft();
     void RotateRight();
     void HorizontalMirror();
-    uint8_t GetTileVal(PairOfInt8 loc){return data[loc].GetVal();}
+    uint8_t GetTileVal(PairOfInt8 loc) const{return data.find(loc) == data.end() ? 0 : data.at(loc).GetVal();}
+    void SetTileVal(PairOfInt8 loc, uint8_t val){data[loc].SetVal(val);}
 private:
     map<PairOfInt8, BaseTile> data;
 };
@@ -34,6 +35,7 @@ public:
     uint32_t GetScore(){return score;}
     uint8_t GetWidth(){return grid.GetWidth();}
     uint8_t GetHeight(){return grid.GetHeight();}
+    //const Grid2048& GetGrid(){return grid;}
     uint8_t GetTileVal(PairOfInt8 loc){return grid.GetTileVal(loc);}
     uint8_t GetBestMove();
 private:

@@ -108,11 +108,11 @@ bool Grid2048::IsAbleToMerge(uint8_t direction)
 {
     if (direction != 'w' && direction != 'a' && direction != 's' && direction != 'd')
         return false;
-    map<PairOfInt8, BaseTile> dataCpy = data;
+    auto dataCpy = data;
+    //qDebug("sizecmp: %lu %lu", data.size(), dataCpy.size());
     Merge(direction);
     bool res = dataCpy != data;
     data = dataCpy;
-    // printf("\nsizecmp: %lu %lu, res: %d", data.size(), dataCpy.size(),res);
     return res;
 }
 void Grid2048::RotateLeft()
@@ -197,7 +197,8 @@ void Game2048::Step(uint8_t direction)
     //else
     //    qDebug("\nCannot merge in this Direction!");
 }
-/*void Grid::DebugPrintGrid()
+/*
+void Grid2048::DebugPrintGrid()
 {
     QString LINE;
     for (uint8_t i = 0; i < height; ++i)
@@ -225,8 +226,8 @@ void Game2048::Step(uint8_t direction)
     for (uint8_t j = 0; j < width; ++j)
         LINE += "----+";
     qDebug().noquote() << LINE;
-}*/
-/*void Game::Print()
+}
+void Game2048::Print()
 {
     //qDebug() << "-New-Round-";
     if(!GameOver())

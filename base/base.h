@@ -20,7 +20,7 @@ class BaseTile
 public:
     BaseTile();
     BaseTile(uint8_t _v);
-    uint8_t GetVal();
+    uint8_t GetVal() const;
     void SetVal(uint8_t _v);
     bool operator==(const BaseTile &other) const;
 private:

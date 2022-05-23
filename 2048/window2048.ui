@@ -117,6 +117,13 @@ QPushButton:pressed
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
+       <widget class="QCheckBox" name="checkBox">
+        <property name="text">
+         <string>Animation</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QLabel" name="labelScore">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">

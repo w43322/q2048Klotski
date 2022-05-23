@@ -7,6 +7,9 @@
 #include <QLabel>
 #include <QTime>
 #include <QInputDialog>
+#include <QPropertyAnimation>
+#include <QParallelAnimationGroup>
+#include <QVector>
 
 #include "2048.h"
 
@@ -31,9 +34,11 @@ private slots:
     void on_pushButtonAuto_clicked();
     void on_pushButtonStop_clicked();
     void on_pushButtonNewGame_clicked();
+    void on_checkBox_stateChanged(int arg1);
 
 private:
     Ui::Window2048 *ui;
+    void ProcessPress(uint8_t);
     void InitSetup();
     void KeepAspectRatio();
     void InitGridOfLabels();
@@ -47,12 +52,17 @@ private:
                            const QStringList& Options,
                            uint8_t defVal,
                            QWidget* parent);
+    Grid2048 AnimateParallelMove(uint8_t);
+    void AnimatePop(const Grid2048& oldGrid);
     map<PairOfInt8, QLabel> GridOfLabels;
     uint16_t BorderLen;
     uint16_t TileLen;
     Game2048 GAME;
     bool hint = 0;
     bool aut0 = 0;
+    bool anim = 0;
+    bool inAnimation = 0;
+    const int AnimationDuration = 300;
     const float BorderToTileRatio = 14.0f / 107;
     const float BorderRaduisToTileRatio = 7.0f / 107;
     const QString COMMON_STYLE = "qproperty-alignment: AlignCenter; font-weight: bold;";

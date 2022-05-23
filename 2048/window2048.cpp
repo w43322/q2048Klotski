@@ -124,23 +124,218 @@ void Window2048::DrawGridOfLabels()
     }
 }
 
+Grid2048 Window2048::AnimateParallelMove(uint8_t direction)
+{
+    Grid2048 res(GAME.GetWidth(), GAME.GetHeight());
+    //qDebug() << "AnimateParallelMove";
+    map<PairOfInt8, PairOfInt8> locationChange;
+    switch (direction)
+    {
+    case 'w':
+        for (uint8_t j = 0; j < GAME.GetWidth(); ++j)
+        {
+            u_int8_t firstEmptyI = -1;
+            u_int8_t lastTileVal = 0;
+            for (uint8_t i = 0; i < GAME.GetHeight(); ++i)
+            {
+                PairOfInt8 oldLoc = make_pair(i, j);
+                int nowTileVal = GAME.GetTileVal(oldLoc);
+                if (nowTileVal == 0) // an empty tile
+                    continue;
+                if (nowTileVal != lastTileVal)
+                    ++firstEmptyI; // non-mergeable
+                else
+                    nowTileVal = 0; // mark as non-mergeable
+                PairOfInt8 newLoc = make_pair(firstEmptyI, j);
+                if (oldLoc != newLoc)
+                    locationChange[oldLoc] = newLoc;
+                res.SetTileVal(newLoc, nowTileVal);
+                //qDebug() << "oldLoc:" << oldLoc.first << oldLoc.second << "newLoc:" << newLoc.first << newLoc.second;
+                lastTileVal = nowTileVal;
+            }
+        }
+        break;
+    case 'a':
+        for (uint8_t i = 0; i < GAME.GetHeight(); ++i)
+        {
+            u_int8_t firstEmptyJ = -1;
+            u_int8_t lastTileVal = 0;
+            for (uint8_t j = 0; j < GAME.GetWidth(); ++j)
+            {
+                PairOfInt8 oldLoc = make_pair(i, j);
+                int nowTileVal = GAME.GetTileVal(oldLoc);
+                if (nowTileVal == 0) // an empty tile
+                    continue;
+                if (nowTileVal != lastTileVal)
+                    ++firstEmptyJ; // non-mergeable
+                else
+                    nowTileVal = 0; // mark as non-mergeable
+                PairOfInt8 newLoc = make_pair(i, firstEmptyJ);
+                if (oldLoc != newLoc)
+                    locationChange[oldLoc] = newLoc;
+                res.SetTileVal(newLoc, nowTileVal);
+                //qDebug() << "oldLoc:" << oldLoc.first << oldLoc.second << "newLoc:" << newLoc.first << newLoc.second;
+                lastTileVal = nowTileVal;
+            }
+        }
+        break;
+    case 's':
+        for (uint8_t j = 0; j < GAME.GetWidth(); ++j)
+        {
+            u_int8_t firstEmptyI = GAME.GetHeight();
+            u_int8_t lastTileVal = 0;
+            for (uint8_t i = GAME.GetHeight() - 1; i != 255; --i)
+            {
+                PairOfInt8 oldLoc = make_pair(i, j);
+                int nowTileVal = GAME.GetTileVal(oldLoc);
+                if (nowTileVal == 0) // an empty tile
+                    continue;
+                if (nowTileVal != lastTileVal)
+                    --firstEmptyI; // non-mergeable
+                else
+                    nowTileVal = 0; // mark as non-mergeable
+                PairOfInt8 newLoc = make_pair(firstEmptyI, j);
+                if (oldLoc != newLoc)
+                    locationChange[oldLoc] = newLoc;
+                res.SetTileVal(newLoc, nowTileVal);
+                //qDebug() << "oldLoc:" << oldLoc.first << oldLoc.second << "newLoc:" << newLoc.first << newLoc.second;
+                lastTileVal = nowTileVal;
+            }
+        }
+        break;
+    case 'd':
+        for (uint8_t i = 0; i < GAME.GetHeight(); ++i)
+        {
+            u_int8_t firstEmptyJ = GAME.GetWidth();
+            u_int8_t lastTileVal = 0;
+            for (uint8_t j = GAME.GetWidth() - 1; j!= 255; --j)
+            {
+                PairOfInt8 oldLoc = make_pair(i, j);
+                int nowTileVal = GAME.GetTileVal(oldLoc);
+                if (nowTileVal == 0) // an empty tile
+                    continue;
+                if (nowTileVal != lastTileVal)
+                    --firstEmptyJ; // non-mergeable
+                else
+                    nowTileVal = 0; // mark as non-mergeable
+                PairOfInt8 newLoc = make_pair(i, firstEmptyJ);
+                if (oldLoc != newLoc)
+                    locationChange[oldLoc] = newLoc;
+                res.SetTileVal(newLoc, nowTileVal);
+                //qDebug() << "oldLoc:" << oldLoc.first << oldLoc.second << "newLoc:" << newLoc.first << newLoc.second;
+                lastTileVal = nowTileVal;
+            }
+        }
+        break;
+    }
+    QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
+    QVector<QLabel*> placeholderArray;
+    for (auto&& pairLocations : locationChange)
+    {
+        PairOfInt8 oldLoc = pairLocations.first, newLoc = pairLocations.second;
+        uint8_t newY = newLoc.first, newX = newLoc.second;
+        auto&& pTile = &GridOfLabels[oldLoc];
+        pTile->raise();
+
+        // Create Animation
+        QPropertyAnimation* animation = new QPropertyAnimation(pTile, "geometry");
+        animation->setDuration(AnimationDuration*0.45);
+        animation->setEndValue(
+                    QRect(BorderLen * (newX + 1) + TileLen * newX,
+                          BorderLen * (newY + 1) + TileLen * newY,
+                          pTile->width(),
+                          pTile->height()));
+        group->addAnimation(animation);
+
+        // Create Placeholder QLabel
+        QLabel* pLabel = new QLabel(ui->widgetGrid);
+        QString STYLE = COMMON_STYLE + LABEL_STYLES[0] +
+                "border-radius:" + QString::number((int)(TileLen * BorderRaduisToTileRatio)) + "px;";
+        pLabel->setStyleSheet(STYLE);
+        pLabel->setGeometry(pTile->geometry());
+        pLabel->lower();
+        pLabel->show();
+        placeholderArray.push_back(pLabel);
+    }
+    group->start(QAbstractAnimation::DeleteWhenStopped);
+    Sleep(AnimationDuration*0.5);
+    for (auto&& pLabel : placeholderArray)
+        delete pLabel;
+    return res;
+}
+
+void Window2048::AnimatePop(const Grid2048& oldGrid)
+{
+    QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
+    for (uint8_t i = 0; i < GAME.GetHeight(); ++i)
+    {
+        for (uint8_t j = 0; j < GAME.GetWidth(); ++j)
+        {
+            PairOfInt8 loc = make_pair(i, j);
+            if (oldGrid.GetTileVal(loc) != GAME.GetTileVal(loc))
+            {
+                auto&& pTile = &GridOfLabels[loc];
+                QPropertyAnimation* animation = new QPropertyAnimation(pTile, "geometry");
+                animation->setDuration(AnimationDuration*0.225);
+                animation->setStartValue(
+                            QRect(pTile->x(),
+                                  pTile->y(),
+                                  pTile->width(),
+                                  pTile->height()));
+                animation->setEndValue(
+                            QRect(pTile->x()-0.5*BorderToTileRatio*pTile->width(),
+                                  pTile->y()-0.5*BorderToTileRatio*pTile->height(),
+                                  (BorderToTileRatio + 1.0)*pTile->width(),
+                                  (BorderToTileRatio + 1.0)*pTile->height()));
+                group->addAnimation(animation);
+            }
+        }
+    }
+    group->start(QAbstractAnimation::KeepWhenStopped);
+    Sleep(AnimationDuration*0.25);
+    group->setDirection(QAbstractAnimation::Backward);
+    group->start(QAbstractAnimation::DeleteWhenStopped);
+    Sleep(AnimationDuration*0.25);
+}
+
+void Window2048::ProcessPress(uint8_t direction)
+{
+    if (anim)
+    {
+        ui->checkBox->setEnabled(false);
+        inAnimation = true;
+        Grid2048 oldGrid = AnimateParallelMove(direction);
+        GAME.Step(direction);
+        DrawGridOfLabels();
+        AnimatePop(oldGrid);
+        inAnimation = false;
+        ui->checkBox->setEnabled(true);
+    }
+    else
+    {
+        GAME.Step(direction);
+        DrawGridOfLabels();
+    }
+}
+
 void Window2048::keyPressEvent(QKeyEvent *event)
 {
-    if (aut0)
+    if (aut0 || inAnimation)
         return;
+    Game2048 lastGameState = GAME;
     switch (event->key())
     {
         case Qt::Key_W:case Qt::Key_Up:
-            GAME.Step('w');
+            ProcessPress('w');
             break;
         case Qt::Key_A:case Qt::Key_Left:
-            GAME.Step('a');
+            ProcessPress('a');
             break;
         case Qt::Key_S:case Qt::Key_Down:
-            GAME.Step('s');
+            ProcessPress('s');
             break;
         case Qt::Key_D:case Qt::Key_Right:
-            GAME.Step('d');
+            ProcessPress('d');
             break;
         case Qt::Key_Escape:
             ((MainWindow*)parent())->show();
@@ -153,7 +348,7 @@ void Window2048::keyPressEvent(QKeyEvent *event)
     }
     SetScore();
     SetHint();
-    DrawGridOfLabels();
+    //DrawGridOfLabels();
 }
 
 void Window2048::SetHint()
@@ -270,4 +465,8 @@ uint8_t Window2048::AskFor(const QString& Title,
     return isok ? STR.toUInt() : defVal;
 }
 
+void Window2048::on_checkBox_stateChanged(int arg1)
+{
+    anim = arg1;
+}
 
