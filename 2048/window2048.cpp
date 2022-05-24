@@ -146,8 +146,8 @@ Grid2048 Window2048::AnimateParallelMove(uint8_t direction)
     case 'w':
         for (uint8_t j = 0; j < GAME.GetWidth(); ++j)
         {
-            u_int8_t firstEmptyI = -1;
-            u_int8_t lastTileVal = 0;
+            uint8_t firstEmptyI = -1;
+            uint8_t lastTileVal = 0;
             for (uint8_t i = 0; i < GAME.GetHeight(); ++i)
             {
                 PairOfInt8 oldLoc = make_pair(i, j);
@@ -170,8 +170,8 @@ Grid2048 Window2048::AnimateParallelMove(uint8_t direction)
     case 'a':
         for (uint8_t i = 0; i < GAME.GetHeight(); ++i)
         {
-            u_int8_t firstEmptyJ = -1;
-            u_int8_t lastTileVal = 0;
+            uint8_t firstEmptyJ = -1;
+            uint8_t lastTileVal = 0;
             for (uint8_t j = 0; j < GAME.GetWidth(); ++j)
             {
                 PairOfInt8 oldLoc = make_pair(i, j);
@@ -194,8 +194,8 @@ Grid2048 Window2048::AnimateParallelMove(uint8_t direction)
     case 's':
         for (uint8_t j = 0; j < GAME.GetWidth(); ++j)
         {
-            u_int8_t firstEmptyI = GAME.GetHeight();
-            u_int8_t lastTileVal = 0;
+            uint8_t firstEmptyI = GAME.GetHeight();
+            uint8_t lastTileVal = 0;
             for (uint8_t i = GAME.GetHeight() - 1; i != 255; --i)
             {
                 PairOfInt8 oldLoc = make_pair(i, j);
@@ -218,8 +218,8 @@ Grid2048 Window2048::AnimateParallelMove(uint8_t direction)
     case 'd':
         for (uint8_t i = 0; i < GAME.GetHeight(); ++i)
         {
-            u_int8_t firstEmptyJ = GAME.GetWidth();
-            u_int8_t lastTileVal = 0;
+            uint8_t firstEmptyJ = GAME.GetWidth();
+            uint8_t lastTileVal = 0;
             for (uint8_t j = GAME.GetWidth() - 1; j!= 255; --j)
             {
                 PairOfInt8 oldLoc = make_pair(i, j);
@@ -251,7 +251,7 @@ Grid2048 Window2048::AnimateParallelMove(uint8_t direction)
 
         // Create Animation
         QPropertyAnimation* animation = new QPropertyAnimation(pTile, "geometry");
-        animation->setDuration(AnimationDuration*0.45);
+        animation->setDuration(AnimationDuration*0.4);
         animation->setEndValue(
                     QRect(BorderLen * (newX + 1) + TileLen * newX,
                           BorderLen * (newY + 1) + TileLen * newY,
@@ -288,7 +288,7 @@ void Window2048::AnimatePop(const Grid2048& oldGrid)
             {
                 auto&& pTile = &GridOfLabels[loc];
                 QPropertyAnimation* animation = new QPropertyAnimation(pTile, "geometry");
-                animation->setDuration(AnimationDuration*0.225);
+                animation->setDuration(AnimationDuration*0.2);
                 animation->setStartValue(
                             QRect(pTile->x(),
                                   pTile->y(),
