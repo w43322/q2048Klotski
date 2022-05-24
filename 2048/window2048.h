@@ -66,7 +66,7 @@ private:
     const int AnimationDuration = 300;
     const float BorderToTileRatio = 14.0f / 107;
     const float BorderRaduisToTileRatio = 7.0f / 107;
-    const QString COMMON_STYLE = "qproperty-alignment: AlignCenter; font-weight: bold;";
+    const QString COMMON_STYLE = "qproperty-alignment: AlignCenter; font-family: Menlo; font-weight: bold;";
     const QStringList LABEL_STYLES =
     {
         "background: #cdc1b4; color: #776e65;", // 0,  1

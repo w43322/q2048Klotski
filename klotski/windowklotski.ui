@@ -29,7 +29,7 @@ QWidget#widgetGrid
 
 QLabel#labelBest, QLabel#labelHint, QLabel#labelScore
 {
-    font-family: &quot;Menlo&quot;;
+    font-family: &quot;Monaco&quot;;
     background: #bbada0;
     border-radius: 7px;
     padding-top: 10px;
@@ -152,7 +152,7 @@ QPushButton:pressed
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>24</height>
+     <height>28</height>
     </rect>
    </property>
   </widget>
