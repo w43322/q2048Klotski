@@ -62,6 +62,7 @@ private:
     bool aut0 = 0;
     bool anim = 1;
     bool inAnimation = 0;
+    uint8_t bestMove = 0;
     const int AnimationDuration = 300;
     const float BorderToTileRatio = 14.0f / 107;
     const float BorderRaduisToTileRatio = 7.0f / 107;

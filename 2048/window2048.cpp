@@ -6,8 +6,8 @@
 Window2048::Window2048(QWidget *parent) :
     QMainWindow(parent)
     , ui(new Ui::Window2048)
-    , GAME(AskFor("Width", "Please Select Width:", {"4","5","6","7","8","9","10"}, 4, parent)
-         , AskFor("Height", "Please Select Height:", {"4","5","6","7","8","9","10"}, 4, parent))
+    , GAME(AskFor("Width", "Please Select Width:", {"4","3","5","6","7","8","9","10"}, 4, parent)
+         , AskFor("Height", "Please Select Height:", {"4","3","5","6","7","8","9","10"}, 4, parent))
 {
     ui->setupUi(this);
     InitSetup();
@@ -21,6 +21,9 @@ Window2048::~Window2048()
 void Window2048::InitSetup()
 {
     hint = 0;
+    ui->labelHint->hide();
+    ui->pushButtonAuto->hide();
+    ui->pushButtonStop->hide();
     aut0 = 0;
     SetScore();
     SetHint();
@@ -35,15 +38,28 @@ void Window2048::InitSetup()
 
 void Window2048::on_pushButtonNewGame_clicked()
 {
-    GAME = Game2048(AskFor("Width", "Please Select Width:", {"4","5","6","7","8","9","10"}, 4, this)
-                    , AskFor("Height", "Please Select Height:", {"4","5","6","7","8","9","10"}, 4, this));
+    GAME = Game2048(AskFor("Width", "Please Select Width:", {"4","3","5","6","7","8","9","10"}, 4, this)
+                    , AskFor("Height", "Please Select Height:", {"4","3","5","6","7","8","9","10"}, 4, this));
     InitSetup();
 }
 
 void Window2048::on_pushButtonHint_clicked()
 {
     hint = !hint;
-    SetHint();
+    if (hint == 0)
+    {
+        ui->labelHint->hide();
+        ui->pushButtonAuto->hide();
+        ui->pushButtonStop->hide();
+        return;
+    }
+    else
+    {
+        SetHint();
+        ui->labelHint->show();
+        ui->pushButtonAuto->show();
+        ui->pushButtonStop->show();
+    }
 }
 
 void Window2048::on_pushButtonStop_clicked()
@@ -64,13 +80,12 @@ void Window2048::on_pushButtonAuto_clicked()
     ui->pushButtonStop->setEnabled(true);
     while (aut0)
     {
-        uint8_t mov = GAME.GetBestMove();
+        uint8_t mov = bestMove;
         if (!mov)
             break;
         ProcessPress(mov);
         Sleep(!anim);
     }
-    on_pushButtonStop_clicked();
 }
 
 void Window2048::InitGridOfLabels()
@@ -313,6 +328,9 @@ void Window2048::ProcessPress(uint8_t direction)
         GAME.Step(direction);
         DrawGridOfLabels();
     }
+    SetScore();
+    if (hint)
+        SetHint();
 }
 
 void Window2048::keyPressEvent(QKeyEvent *event)
@@ -343,20 +361,10 @@ void Window2048::keyPressEvent(QKeyEvent *event)
             //qDebug() << event->key() << endl;
             break;
     }
-    SetScore();
-    SetHint();
-    //DrawGridOfLabels();
 }
 
 void Window2048::SetHint()
 {
-    if (hint == 0)
-    {
-        ui->labelHint->hide();
-        ui->pushButtonAuto->hide();
-        ui->pushButtonStop->hide();
-        return;
-    }
     QString STYLE1 =
     "style = '"
     "font-size: 13px;"
@@ -373,24 +381,25 @@ void Window2048::SetHint()
     {
     case 'w': // up
         TEXT += "UP";
+        bestMove = 'w';
         break;
     case 's': // down
         TEXT += "DOWN";
+        bestMove = 's';
         break;
     case 'a': // left
         TEXT += "LEFT";
+        bestMove = 'a';
         break;
     case 'd': // right
         TEXT += "RIGHT";
+        bestMove = 'd';
         break;
     default:
         TEXT += "N/A";
     }
     TEXT +="</font>";
     ui->labelHint->setText(TEXT);
-    ui->labelHint->show();
-    ui->pushButtonAuto->show();
-    ui->pushButtonStop->show();
 }
 
 void Window2048::SetScore()

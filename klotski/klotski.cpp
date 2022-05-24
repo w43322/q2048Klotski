@@ -8,8 +8,25 @@ void GridKlotski::SetTile(uint8_t val, uint8_t i, uint8_t j, uint8_t wid, uint8_
 
 GameKlotski::GameKlotski(const QString& gs) : grid(GameSetData[gs][0].toUInt(), GameSetData[gs][1].toUInt())
 {
+    grid.ClearGrid();
     //qDebug() << GameSetData[gs][0].toUInt() << GameSetData[gs][1].toUInt();
-    auto &&GameSet = GameSetData[gs];
+    auto GameSet = GameSetData[gs];
+    if (GameSet[2] == "NUMBERRAND")
+    {
+        for (uint8_t num = 1; num < GetWidth() * GetHeight(); ++num)
+        {
+            uint8_t i = rand() % GetHeight();
+            uint8_t j = rand() % GetWidth();
+            while (grid.GetTileVal(make_pair(i, j)) != 0)
+            {
+                i = rand() % GetHeight();
+                j = rand() % GetWidth();
+            }
+            //qDebug() << num << ":" << i << j;
+            grid.SetTile(num, i, j, 1, 1);
+        }
+        return;
+    }
     QStringList Tiles = GameSet[2].split('|');
     for(auto &&line:Tiles)
     {

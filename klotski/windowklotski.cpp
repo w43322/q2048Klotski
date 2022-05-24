@@ -6,7 +6,7 @@
 WindowKlotski::WindowKlotski(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::WindowKlotski)
-    ,GAME(AskFor("Width", "Please Select Width:", {"横刀立马", "指挥若定"/*, "数字华容道"*/}, "横刀立马", parent))
+    ,GAME(AskFor("Game", "Please Select Game:", {"横刀立马", "指挥若定", "数字华容道"}, "横刀立马", parent))
 {
     ui->setupUi(this);
     InitSetup();
@@ -14,9 +14,10 @@ WindowKlotski::WindowKlotski(QWidget *parent) :
 
 void WindowKlotski::on_pushButton_clicked()
 {
-    GAME = AskFor("Width", "Please Select Width:", {"横刀立马", "指挥若定"/*, "数字华容道"*/}, "横刀立马", this);
+    GAME = GameKlotski(AskFor("Game", "Please Select Game:", {"横刀立马", "指挥若定", "数字华容道"}, "横刀立马", this));
     InitSetup();
 }
+
 
 void WindowKlotski::InitSetup()
 {
