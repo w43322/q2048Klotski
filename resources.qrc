@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>fonts/Menlo.ttf</file>
+        <file>fonts/Monaco.ttf</file>
+    </qresource>
+</RCC>
