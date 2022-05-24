@@ -78,7 +78,7 @@ void Window2048::on_pushButtonAuto_clicked()
     ui->pushButtonAuto->setEnabled(false);
     ui->pushButtonHint->setEnabled(false);
     ui->pushButtonStop->setEnabled(true);
-    while (aut0)
+    while (aut0 && this->isVisible())
     {
         uint8_t mov = bestMove;
         if (!mov)
