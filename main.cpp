@@ -5,9 +5,8 @@
 
 int main(int argc, char *argv[])
 {
-    QFontDatabase::addApplicationFont(":/fonts/menlo.ttf");
-    QFontDatabase::addApplicationFont(":/fonts/monaco.ttf");
     QApplication a(argc, argv);
+    //a.setFont();
     //a.setQuitOnLastWindowClosed(false);
     MainWindow w;
     w.show();

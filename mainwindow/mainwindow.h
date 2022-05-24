@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QFontDatabase>
 
 #include "2048/window2048.h"
 #include "klotski/windowklotski.h"

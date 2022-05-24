@@ -5,6 +5,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    QFontDatabase::addApplicationFont(":/fonts/Monaco.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/Menlo.ttf");
     ui->setupUi(this);
 }
 
