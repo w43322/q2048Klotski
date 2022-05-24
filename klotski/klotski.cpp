@@ -65,7 +65,7 @@ bool GridKlotski::IsAbleToMove(PairOfInt8 loc, uint8_t direction)
             default:
                 return false;
             }
-            if (nx < 0 || ny < 0 || nx >= height || ny >= width)
+            if (nx == 255 || ny == 255 || nx >= height || ny >= width)
                 return false;
             if (!data[make_pair(nx, ny)].IsEmpty())
                 if (nx < sx || ny < sy || nx >= ex || ny >= ey)
