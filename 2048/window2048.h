@@ -10,6 +10,8 @@
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
 #include <QVector>
+#include <QTimer>
+#include <QMessageBox>
 
 #include "2048.h"
 
@@ -28,6 +30,7 @@ public:
 protected:
     virtual void resizeEvent(QResizeEvent *) Q_DECL_OVERRIDE;
     virtual void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
+    virtual void closeEvent(QCloseEvent *) Q_DECL_OVERRIDE;
 
 private slots:
     void on_pushButtonHint_clicked();
@@ -35,6 +38,8 @@ private slots:
     void on_pushButtonStop_clicked();
     void on_pushButtonNewGame_clicked();
     void on_checkBox_stateChanged(int arg1);
+
+    void SetTime();
 
 private:
     Ui::Window2048 *ui;
@@ -63,6 +68,8 @@ private:
     bool anim = 1;
     bool inAnimation = 0;
     uint8_t bestMove = 0;
+    QTime gameTime;
+    QTimer timer;
     const int AnimationDuration = 300;
     const float BorderToTileRatio = 14.0f / 107;
     const float BorderRaduisToTileRatio = 7.0f / 107;

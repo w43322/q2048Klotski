@@ -41,5 +41,6 @@ public:
 private:
     Grid2048 grid;
     uint32_t score = 0;
+
 };
 #endif // _2048_H

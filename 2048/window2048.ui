@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>678</width>
+    <width>687</width>
     <height>581</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@ QWidget#widgetGrid
     background: #bbada0;
 }
 
-QLabel#labelBest, QLabel#labelHint, QLabel#labelScore
+QLabel#labelTime, QLabel#labelHint, QLabel#labelScore
 {
     font-family: &quot;Monaco&quot;;
     background: #bbada0;
@@ -37,7 +37,8 @@ QLabel#labelBest, QLabel#labelHint, QLabel#labelScore
     padding-right: 20px;
 }
 
-QPushButton 
+QPushButton#pushButtonHint, QPushButton#pushButtonAuto, 
+QPushButton#pushButtonStop, QPushButton#pushButtonNewGame
 {
     font-family: &quot;Menlo&quot;;
     font-size: 18px;
@@ -52,21 +53,18 @@ QPushButton
     text-align: center;
 }
 
-/*按钮停留态*/
-QPushButton:hover
+QPushButton#pushButtonHint:hover, QPushButton#pushButtonAuto:hover, 
+QPushButton#pushButtonStop:hover, QPushButton#pushButtonNewGame:hover
 {
     /*背景颜色*/  
     background-color:rgb(44 , 137 , 255);
 }
 
-/*按钮按下态*/
-QPushButton:pressed
+QPushButton#pushButtonHint:pressed, QPushButton#pushButtonAuto:pressed, 
+QPushButton#pushButtonStop:pressed, QPushButton#pushButtonNewGame:pressed
 {
-    /*背景颜色*/  
     background-color:rgb(14 , 135 , 228);
-    /*左内边距为3像素，让按下时字向右移动3像素*/  
     padding-left:3px;
-    /*上内边距为3像素，让按下时字向下移动3像素*/  
     padding-top:3px;
 }
 </string>
@@ -143,7 +141,7 @@ QPushButton:pressed
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="labelBest">
+       <widget class="QLabel" name="labelTime">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -226,8 +224,8 @@ QPushButton:pressed
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>678</width>
-     <height>28</height>
+     <width>687</width>
+     <height>24</height>
     </rect>
    </property>
   </widget>

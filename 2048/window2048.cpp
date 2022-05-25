@@ -15,11 +15,16 @@ Window2048::Window2048(QWidget *parent) :
 
 Window2048::~Window2048()
 {
+    on_pushButtonStop_clicked();
     delete ui;
 }
 
 void Window2048::InitSetup()
 {
+    connect(&timer, SIGNAL(timeout()), this, SLOT(SetTime()));
+    gameTime.start();
+    timer.start(1000);
+    SetTime();
     hint = 0;
     ui->labelHint->hide();
     ui->pushButtonAuto->hide();
@@ -78,7 +83,7 @@ void Window2048::on_pushButtonAuto_clicked()
     ui->pushButtonAuto->setEnabled(false);
     ui->pushButtonHint->setEnabled(false);
     ui->pushButtonStop->setEnabled(true);
-    while (aut0 && this->isVisible())
+    while (aut0)
     {
         uint8_t mov = bestMove;
         if (!mov)
@@ -363,6 +368,21 @@ void Window2048::keyPressEvent(QKeyEvent *event)
     }
 }
 
+void Window2048::closeEvent(QCloseEvent *e)
+{
+    if (aut0)
+        on_pushButtonStop_clicked();
+    auto ans = QMessageBox::question(
+                this,
+                "Quit",
+                "Are you sure to quit this application?",
+                QMessageBox::Yes, QMessageBox::No);
+    if(ans == QMessageBox::Yes)
+        e->accept();
+    else
+        e->ignore();
+}
+
 void Window2048::SetHint()
 {
     QString STYLE1 =
@@ -418,6 +438,24 @@ void Window2048::SetScore()
     TEXT += "<font " + STYLE2 + ">";
     TEXT += QString::number(GAME.GetScore()) + "</font>";
     ui->labelScore->setText(TEXT);
+}
+
+void Window2048::SetTime()
+{
+    QString STYLE1 =
+    "style = '"
+    "font-size: 13px;"
+    "font-weight: bold;"
+    "color: #eee4da;'";
+    QString STYLE2 =
+    "style = '"
+    "font-size: 25px;"
+    "font-weight: bold;"
+    "color: white;'";
+    QString TEXT = "<font " + STYLE1 + ">TIME</font><br/>";
+    TEXT += "<font " + STYLE2 + ">";
+    TEXT += QDateTime::fromMSecsSinceEpoch(gameTime.elapsed(), Qt::UTC).toString("mm:ss") + "</font>";
+    ui->labelTime->setText(TEXT);
 }
 
 void Window2048::KeepAspectRatio()
