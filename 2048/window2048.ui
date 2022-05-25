@@ -14,7 +14,7 @@
    <enum>Qt::StrongFocus</enum>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>2048</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow

@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     QFontDatabase::addApplicationFont(":/fonts/Menlo-Bold.ttf");
     QFontDatabase::addApplicationFont(":/fonts/Menlo-Regular.ttf");
     ui->setupUi(this);
+    ui->afterLoginWidget->hide();
 }
 
 MainWindow::~MainWindow()
@@ -76,7 +77,8 @@ void MainWindow::LogIn()
             return;
         }
        //用户存在且密码验证通过
-
+        ui->afterLoginWidget->show();
+        ui->beforeLoginWidget->hide();
     } //if
 }
 
