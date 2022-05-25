@@ -9,7 +9,9 @@ MainWindow::MainWindow(QWidget *parent)
     QFontDatabase::addApplicationFont(":/fonts/Menlo-Bold.ttf");
     QFontDatabase::addApplicationFont(":/fonts/Menlo-Regular.ttf");
     ui->setupUi(this);
+    SetHelpLabel();
     ui->afterLoginWidget->hide();
+    ui->helpWidget->hide();
 }
 
 MainWindow::~MainWindow()
@@ -113,3 +115,40 @@ void MainWindow::SetWelcomeLabel()
     TEXT += userName + "</font>";
     ui->welcomeLabel->setText(TEXT);
 }
+
+void MainWindow::SetHelpLabel()
+{
+    QString STYLE1 =
+    "style = '"
+    "font-size: 40px;"
+    "font-weight: bold;"
+    "color: #eee4da;'";
+    QString STYLE2 =
+    "style = '"
+    "font-size: 18px;"
+    "font-weight: bold;"
+    "color: white;'";
+    QString TEXT = "<font " + STYLE1 + ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HELP</font><br/>";
+    TEXT += "<font " + STYLE2 + ">" + "Global:" + "</font><br/>";
+    TEXT += "<font " + STYLE2 + ">" + "&nbsp;&nbsp;&nbsp;&nbsp;Esc - Exit to Main Menu" + "</font><br/>";
+    TEXT += "<font " + STYLE2 + ">" + "2048:" + "</font><br/>";
+    TEXT += "<font " + STYLE2 + ">" + "&nbsp;&nbsp;&nbsp;&nbsp;W/A/S/D - Swipe Board" + "</font><br/>";
+    TEXT += "<font " + STYLE2 + ">" + "&nbsp;&nbsp;&nbsp;&nbsp;Up/Dn/Lf/Rt - Swipe Board" + "</font><br/>";
+    TEXT += "<font " + STYLE2 + ">" + "Klotski:" + "</font><br/>";
+    TEXT += "<font " + STYLE2 + ">" + "&nbsp;&nbsp;&nbsp;&nbsp;W/A/S/D - Move Selected Brick" + "</font><br/>";
+    TEXT += "<font " + STYLE2 + ">" + "&nbsp;&nbsp;&nbsp;&nbsp;Up/Dn/Lf/Rt - Change Selected Brick" + "</font>";
+    ui->helpLabel->setText(TEXT);
+}
+
+void MainWindow::on_helpBtn_clicked()
+{
+    ui->helpWidget->show();
+    ui->afterLoginWidget->hide();
+}
+
+void MainWindow::on_backBtn_clicked()
+{
+    ui->afterLoginWidget->show();
+    ui->helpWidget->hide();
+}
+

@@ -26,19 +26,19 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void LogIn();
-    void SetWelcomeLabel();
 
 private slots:
     void on_pushButtonRun2048_clicked();
-
     void on_pushButtonRunKlotski_clicked();
-
     void on_loginBtn_clicked();
-
     void on_logoutBtn_clicked();
+    void on_helpBtn_clicked();
+    void on_backBtn_clicked();
 
 private:
+    void SetHelpLabel();
+    void LogIn();
+    void SetWelcomeLabel();
     Ui::MainWindow *ui;
     Window2048 *uiWindow2048;
     WindowKlotski *uiWindowKlotski;
