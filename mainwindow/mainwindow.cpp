@@ -18,7 +18,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonRun2048_clicked()
 {
-    uiWindow2048 = new Window2048(this);
+    auto wid = Window2048::AskFor("Width", "Please Select Width:", {"4","3","5","6","7","8","9","10"}, this);
+    if (!wid)
+        return;
+    auto hei = Window2048::AskFor("Height", "Please Select Height:", {"4","3","5","6","7","8","9","10"}, this);
+    if (!hei)
+        return;
+    uiWindow2048 = new Window2048(this, wid, hei);
     uiWindow2048->show();
     hide();
 }

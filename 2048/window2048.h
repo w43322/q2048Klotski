@@ -24,8 +24,12 @@ class Window2048 : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit Window2048(QWidget *parent = nullptr);
+    explicit Window2048(QWidget *parent = nullptr, uint8_t wid = 4, uint8_t hei = 4);
     ~Window2048();
+    static uint8_t AskFor(const QString& Title,
+                           const QString& Label,
+                           const QStringList& Options,
+                           QWidget* parent);
 
 protected:
     virtual void resizeEvent(QResizeEvent *) Q_DECL_OVERRIDE;
@@ -52,11 +56,6 @@ private:
     void Sleep(uint32_t);
     void SetScore();
     void SetHint();
-    uint8_t AskFor(const QString& Title,
-                           const QString& Label,
-                           const QStringList& Options,
-                           uint8_t defVal,
-                           QWidget* parent);
     Grid2048 AnimateParallelMove(uint8_t);
     void AnimatePop(const Grid2048& oldGrid);
     map<PairOfInt8, QLabel> GridOfLabels;

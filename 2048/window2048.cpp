@@ -3,11 +3,10 @@
 #include "window2048.h"
 #include "ui_window2048.h"
 
-Window2048::Window2048(QWidget *parent) :
+Window2048::Window2048(QWidget *parent, uint8_t wid, uint8_t hei) :
     QMainWindow(parent)
     , ui(new Ui::Window2048)
-    , GAME(AskFor("Width", "Please Select Width:", {"4","3","5","6","7","8","9","10"}, 4, parent)
-         , AskFor("Height", "Please Select Height:", {"4","3","5","6","7","8","9","10"}, 4, parent))
+    , GAME(wid, hei)
 {
     ui->setupUi(this);
     InitSetup();
@@ -43,8 +42,13 @@ void Window2048::InitSetup()
 
 void Window2048::on_pushButtonNewGame_clicked()
 {
-    GAME = Game2048(AskFor("Width", "Please Select Width:", {"4","3","5","6","7","8","9","10"}, 4, this)
-                    , AskFor("Height", "Please Select Height:", {"4","3","5","6","7","8","9","10"}, 4, this));
+    auto wid = AskFor("Width", "Please Select Width:", {"4","3","5","6","7","8","9","10"}, this);
+    if (!wid)
+        return;
+    auto hei = AskFor("Height", "Please Select Height:", {"4","3","5","6","7","8","9","10"}, this);
+    if (!hei)
+        return;
+    GAME = Game2048(wid, hei);
     InitSetup();
 }
 
@@ -495,7 +499,6 @@ void Window2048::Sleep(uint32_t msec)
 uint8_t Window2048::AskFor(const QString& Title,
                        const QString& Label,
                        const QStringList& Options,
-                       uint8_t defVal,
                        QWidget* parent)
 {
     bool isok;
@@ -506,7 +509,7 @@ uint8_t Window2048::AskFor(const QString& Title,
                                         0,
                                         false,
                                         &isok);
-    return isok ? STR.toUInt() : defVal;
+    return isok ? STR.toUInt() : 0;
 }
 
 void Window2048::on_checkBox_stateChanged(int arg1)
