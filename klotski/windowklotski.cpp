@@ -23,6 +23,10 @@ void WindowKlotski::on_pushButton_clicked()
 
 void WindowKlotski::InitSetup()
 {
+    connect(&timer, SIGNAL(timeout()), this, SLOT(SetTime()));
+    gameTime.start();
+    timer.start(1000);
+    SetTime();
     GAME.Update();
     SelectedLoc = GAME.NextAdjRight(make_pair(0, 0));
     SetStep();
@@ -193,4 +197,22 @@ void WindowKlotski::SetStep()
     TEXT += "<font " + STYLE2 + ">";
     TEXT += QString::number(GAME.GetStep()) + "</font>";
     ui->labelScore->setText(TEXT);
+}
+
+void WindowKlotski::SetTime()
+{
+    QString STYLE1 =
+    "style = '"
+    "font-size: 13px;"
+    "font-weight: bold;"
+    "color: #eee4da;'";
+    QString STYLE2 =
+    "style = '"
+    "font-size: 25px;"
+    "font-weight: bold;"
+    "color: white;'";
+    QString TEXT = "<font " + STYLE1 + ">TIME</font><br/>";
+    TEXT += "<font " + STYLE2 + ">";
+    TEXT += QDateTime::fromMSecsSinceEpoch(gameTime.elapsed(), Qt::UTC).toString("mm:ss") + "</font>";
+    ui->labelTime->setText(TEXT);
 }

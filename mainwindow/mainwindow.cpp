@@ -42,6 +42,7 @@ void MainWindow::on_pushButtonRunKlotski_clicked()
 
 void MainWindow::LogIn()
 {
+    QString uname, pword;
     QFile file(":/xml/database.xml");  //创建XML文件对象
     mydoc.setContent(&file);  //将XML对象赋给QdomDocument类型的Qt文档句柄
     QDomElement root = mydoc.documentElement();  //获取XML文档的DOM根元素
@@ -54,8 +55,8 @@ void MainWindow::LogIn()
             QDomNode user = userList.at(i);  //根据当前索引i获取用户节点元素
             QDomNodeList record = user.childNodes();  //该用户的全部属性元素
            //解析出用户名及密码
-            QString uname = record.at(0).toElement().text(); //"user1","user2"
-            QString pword = record.at(1).toElement().text(); //"password1","password2"
+            uname = record.at(0).toElement().text(); //"user1","user2"
+            pword = record.at(1).toElement().text(); //"password1","password2"
             if(uname == ui->userNameEdit->text())
             {
                 exist = true;  //用户存在
@@ -77,6 +78,8 @@ void MainWindow::LogIn()
             return;
         }
        //用户存在且密码验证通过
+        userName = uname;
+        SetWelcomeLabel();
         ui->afterLoginWidget->show();
         ui->beforeLoginWidget->hide();
     } //if
@@ -87,3 +90,26 @@ void MainWindow::on_loginBtn_clicked()
     LogIn();
 }
 
+void MainWindow::on_logoutBtn_clicked()
+{
+    ui->beforeLoginWidget->show();
+    ui->afterLoginWidget->hide();
+}
+
+void MainWindow::SetWelcomeLabel()
+{
+    QString STYLE1 =
+    "style = '"
+    "font-size: 13px;"
+    "font-weight: bold;"
+    "color: #eee4da;'";
+    QString STYLE2 =
+    "style = '"
+    "font-size: 25px;"
+    "font-weight: bold;"
+    "color: white;'";
+    QString TEXT = "<font " + STYLE1 + ">WELCOME</font><br/>";
+    TEXT += "<font " + STYLE2 + ">";
+    TEXT += userName + "</font>";
+    ui->welcomeLabel->setText(TEXT);
+}

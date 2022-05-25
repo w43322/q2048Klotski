@@ -42,7 +42,6 @@ private slots:
     void on_pushButtonStop_clicked();
     void on_pushButtonNewGame_clicked();
     void on_checkBox_stateChanged(int arg1);
-
     void SetTime();
 
 private:

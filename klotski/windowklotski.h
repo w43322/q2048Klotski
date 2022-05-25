@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QInputDialog>
 #include <QLabel>
+#include <QTime>
+#include <QTimer>
 
 #include "klotski.h"
 
@@ -30,6 +32,7 @@ protected:
 
 private slots:
     void on_pushButton_clicked();
+    void SetTime();
 
 private:
     void InitSetup();
@@ -44,6 +47,8 @@ private:
     GameKlotski GAME;
     uint16_t BorderLen;
     uint16_t TileLen;
+    QTime gameTime;
+    QTimer timer;
     const float BorderToTileRatio = 14.0f / 107;
     const float BorderRaduisToTileRatio = 7.0f / 107;
     const float FontSizeToTileRatio = 55.0f / 107;

@@ -27,6 +27,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void LogIn();
+    void SetWelcomeLabel();
 
 private slots:
     void on_pushButtonRun2048_clicked();
@@ -35,12 +36,16 @@ private slots:
 
     void on_loginBtn_clicked();
 
+    void on_logoutBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     Window2048 *uiWindow2048;
     WindowKlotski *uiWindowKlotski;
+
     QDomDocument mydoc;
-    QDomElement curuser;
+    QString userName;
+
     friend class Window2048;
     friend class WindowKlotski;
 };
