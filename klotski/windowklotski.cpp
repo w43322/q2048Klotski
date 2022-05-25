@@ -3,10 +3,10 @@
 #include "windowklotski.h"
 #include "ui_windowklotski.h"
 
-WindowKlotski::WindowKlotski(QWidget *parent) :
+WindowKlotski::WindowKlotski(QWidget *parent, const QString& ans) :
     QMainWindow(parent),
     ui(new Ui::WindowKlotski)
-    ,GAME(AskFor("Game", "Please Select Game:", {"横刀立马", "指挥若定", "数字华容道"}, "横刀立马", parent))
+    ,GAME(ans)
 {
     ui->setupUi(this);
     InitSetup();
@@ -14,7 +14,10 @@ WindowKlotski::WindowKlotski(QWidget *parent) :
 
 void WindowKlotski::on_pushButton_clicked()
 {
-    GAME = GameKlotski(AskFor("Game", "Please Select Game:", {"横刀立马", "指挥若定", "数字华容道"}, "横刀立马", this));
+    auto ans = AskFor("Game", "Please Select Game:", {"横刀立马", "指挥若定", "数字华容道"}, this);
+    if (ans == "")
+        return;
+    GAME = GameKlotski(ans);
     InitSetup();
 }
 
@@ -37,7 +40,6 @@ WindowKlotski::~WindowKlotski()
 QString WindowKlotski::AskFor(const QString& Title,
                        const QString& Label,
                        const QStringList& Options,
-                       const QString& defVal,
                        QWidget* parent)
 {
     bool isok;
@@ -48,7 +50,7 @@ QString WindowKlotski::AskFor(const QString& Title,
                                         0,
                                         false,
                                         &isok);
-    return isok ? STR : defVal;
+    return isok ? STR : "";
 }
 
 void WindowKlotski::resizeEvent(QResizeEvent *event)

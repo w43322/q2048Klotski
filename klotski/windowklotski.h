@@ -16,8 +16,12 @@ class WindowKlotski : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit WindowKlotski(QWidget *parent = nullptr);
+    explicit WindowKlotski(QWidget *parent = nullptr, const QString& ans = "数字华容道");
     ~WindowKlotski();
+    static QString AskFor(const QString& Title,
+                           const QString& Label,
+                           const QStringList& Options,
+                           QWidget* parent);
 
 protected:
     virtual void resizeEvent(QResizeEvent *) Q_DECL_OVERRIDE;
@@ -33,11 +37,6 @@ private:
     void DrawGridOfLabels();
     void KeepAspectRatio();
     void SetBorderLenAndTileLen();
-    QString AskFor(const QString& Title,
-                           const QString& Label,
-                           const QStringList& Options,
-                           const QString& defVal,
-                           QWidget* parent);
     Ui::WindowKlotski *ui;
     map<PairOfInt8, QLabel> GridOfLabels;
     PairOfInt8 SelectedLoc;
