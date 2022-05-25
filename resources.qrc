@@ -3,5 +3,6 @@
         <file>fonts/Monaco.ttf</file>
         <file>fonts/Menlo-Bold.ttf</file>
         <file>fonts/Menlo-Regular.ttf</file>
+        <file>xml/database.xml</file>
     </qresource>
 </RCC>

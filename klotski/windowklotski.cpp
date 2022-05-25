@@ -21,7 +21,6 @@ void WindowKlotski::on_pushButton_clicked()
     InitSetup();
 }
 
-
 void WindowKlotski::InitSetup()
 {
     GAME.Update();
@@ -98,6 +97,19 @@ void WindowKlotski::keyPressEvent(QKeyEvent *event)
     }
     SetStep();
     DrawGridOfLabels();
+}
+
+void WindowKlotski::closeEvent(QCloseEvent *e)
+{
+    auto ans = QMessageBox::question(
+                this,
+                "Quit",
+                "Are you sure to quit this application?",
+                QMessageBox::Yes, QMessageBox::No);
+    if(ans == QMessageBox::Yes)
+        e->accept();
+    else
+        e->ignore();
 }
 
 void WindowKlotski::InitGridOfLabels()

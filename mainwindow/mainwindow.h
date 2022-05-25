@@ -3,6 +3,14 @@
 
 #include <QMainWindow>
 #include <QFontDatabase>
+#include <QWidget>
+#include <QMessageBox>
+#include <QDomDocument>
+#include <QFile>
+#include <QDebug>
+#include <QDir>
+#include <QDialog>
+#include <QString>
 
 #include "2048/window2048.h"
 #include "klotski/windowklotski.h"
@@ -18,16 +26,21 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void LogIn();
 
 private slots:
     void on_pushButtonRun2048_clicked();
 
     void on_pushButtonRunKlotski_clicked();
 
+    void on_loginBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     Window2048 *uiWindow2048;
     WindowKlotski *uiWindowKlotski;
+    QDomDocument mydoc;
+    QDomElement curuser;
     friend class Window2048;
     friend class WindowKlotski;
 };

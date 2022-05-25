@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+	<UserAccount>
+		<user id ="1">
+			<username>dichloride</username>
+			<password>password1</password>
+		</user>
+		<user id ="2">
+			<username>user2</username>
+			<password>password2</password>
+		</user>
+	</UserAccount>

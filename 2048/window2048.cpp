@@ -340,6 +340,27 @@ void Window2048::ProcessPress(uint8_t direction)
     SetScore();
     if (hint)
         SetHint();
+
+    // Game Over Logic
+    if (GAME.GameOver())
+    {
+        timer.stop();
+        if (aut0)
+            on_pushButtonStop_clicked();
+        auto ans = QMessageBox::question(
+                    this,
+                    "Game Over!",
+                    "Your game is over :(\nDo you want to restart?",
+                    QMessageBox::No, QMessageBox::Yes);
+        if(ans == QMessageBox::Yes)
+            on_pushButtonNewGame_clicked();
+        else
+        {
+            ((MainWindow*)parent())->show();
+            hide();
+            delete this;
+        }
+    }
 }
 
 void Window2048::keyPressEvent(QKeyEvent *event)

@@ -26,6 +26,7 @@ public:
 protected:
     virtual void resizeEvent(QResizeEvent *) Q_DECL_OVERRIDE;
     virtual void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
+    virtual void closeEvent(QCloseEvent *) Q_DECL_OVERRIDE;
 
 private slots:
     void on_pushButton_clicked();
