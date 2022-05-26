@@ -9,6 +9,10 @@ CONFIG += c++11
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+win32:RC_ICONS = icons/icon.ico
+
+macx:ICON = icons/icon.icns
+
 SOURCES += \
     2048-ai/2048ai.cpp \
     2048/2048.cpp \

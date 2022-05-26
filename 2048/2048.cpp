@@ -4,8 +4,8 @@ QString Game2048::ToQString()
     QString res;
     res += QString::number(GetWidth()) + ",";
     res += QString::number(GetHeight()) + ",";
-    for (uint8_t i = 0; i < GetWidth(); ++i)
-        for (uint8_t j = 0; j < GetHeight(); ++j)
+    for (uint8_t i = 0; i < GetHeight(); ++i)
+        for (uint8_t j = 0; j < GetWidth(); ++j)
             res += QString::number(grid.GetTileVal(make_pair(i, j))) + ",";
     res.chop(1);
     return res;

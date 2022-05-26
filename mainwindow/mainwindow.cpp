@@ -257,8 +257,8 @@ void MainWindow::SetHelpLabel()
     TEXT += "<font " + STYLE2 + ">" + "Global:" + "</font><br/>";
     TEXT += "<font " + STYLE2 + ">" + "&nbsp;&nbsp;&nbsp;&nbsp;Esc - Exit to Main Menu" + "</font><br/>";
     TEXT += "<font " + STYLE2 + ">" + "2048:" + "</font><br/>";
-    TEXT += "<font " + STYLE2 + ">" + "&nbsp;&nbsp;&nbsp;&nbsp;W/A/S/D - Swipe Board" + "</font><br/>";
-    TEXT += "<font " + STYLE2 + ">" + "&nbsp;&nbsp;&nbsp;&nbsp;Up/Dn/Lf/Rt - Swipe Board" + "</font><br/>";
+    TEXT += "<font " + STYLE2 + ">" + "&nbsp;&nbsp;&nbsp;&nbsp;W/A/S/D/Up/Dn/Lf/Rt - Swipe Board" + "</font><br/>";
+    TEXT += "<font " + STYLE2 + ">" + "&nbsp;&nbsp;&nbsp;&nbsp;Z - Undo" + "</font><br/>";
     TEXT += "<font " + STYLE2 + ">" + "Klotski:" + "</font><br/>";
     TEXT += "<font " + STYLE2 + ">" + "&nbsp;&nbsp;&nbsp;&nbsp;W/A/S/D - Move Selected Brick" + "</font><br/>";
     TEXT += "<font " + STYLE2 + ">" + "&nbsp;&nbsp;&nbsp;&nbsp;Up/Dn/Lf/Rt - Change Selected Brick" + "</font>";

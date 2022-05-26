@@ -4,5 +4,7 @@
         <file>fonts/Menlo-Bold.ttf</file>
         <file>fonts/Menlo-Regular.ttf</file>
         <file>xml/database.xml</file>
+        <file>icons/icon.icns</file>
+        <file>icons/icon.ico</file>
     </qresource>
 </RCC>
