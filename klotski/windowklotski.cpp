@@ -58,6 +58,7 @@ QString WindowKlotski::AskFor(const QString& Title,
 
 void WindowKlotski::AfterMove()
 {
+    SetStep();
     if (!GAME.GameOver())
         return;
     auto ans = QMessageBox::question(
