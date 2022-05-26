@@ -41,12 +41,12 @@ PairOfInt8 Grid2048::GetRandomEmptyLocation()
 {
     if (IsFull())
         return make_pair(-1, -1);
-    uint8_t x = arc4random() % height;
-    uint8_t y = arc4random() % width;
+    uint8_t x = rand() % height;
+    uint8_t y = rand() % width;
     while (data[make_pair(x, y)].GetVal())
     {
-        x = arc4random() % height;
-        y = arc4random() % width;
+        x = rand() % height;
+        y = rand() % width;
     }
     return make_pair(x, y);
 }
