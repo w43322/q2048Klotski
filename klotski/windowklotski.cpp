@@ -62,8 +62,8 @@ void WindowKlotski::AfterMove()
         return;
     auto ans = QMessageBox::question(
                 this,
-                "Game Over!",
-                "Your game is over :(\nDo you want to restart?",
+                "Success!",
+                "Congratulations! :)\nDo you want to restart?",
                 QMessageBox::No, QMessageBox::Yes);
     if(ans == QMessageBox::Yes)
         on_pushButton_clicked();
