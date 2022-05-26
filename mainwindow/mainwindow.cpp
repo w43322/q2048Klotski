@@ -34,7 +34,7 @@ void MainWindow::on_pushButtonRun2048_clicked()
 
 void MainWindow::on_pushButtonRunKlotski_clicked()
 {
-    auto ans = WindowKlotski::AskFor("Game", "Please Select Game:", {"横刀立马", "指挥若定", "数字华容道"}, this);
+    auto ans = WindowKlotski::AskFor("Game", "Please Select Game:", GameKlotski::GameSetStringList, this);
     if (ans == "")
         return;
     uiWindowKlotski = new WindowKlotski(this, ans);

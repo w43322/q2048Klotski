@@ -63,6 +63,7 @@ public:
     PairOfInt8 NextAdjDown(PairOfInt8 loc);
     PairOfInt8 NextAdjLeft(PairOfInt8 loc);
     PairOfInt8 NextAdjRight(PairOfInt8 loc);
+    static const QStringList GameSetStringList;
 private:
     GridKlotski grid;
     uint32_t step = 0;

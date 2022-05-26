@@ -14,7 +14,7 @@ WindowKlotski::WindowKlotski(QWidget *parent, const QString& ans) :
 
 void WindowKlotski::on_pushButton_clicked()
 {
-    auto ans = AskFor("Game", "Please Select Game:", {"横刀立马", "指挥若定", "数字华容道"}, this);
+    auto ans = AskFor("Game", "Please Select Game:", GameKlotski::GameSetStringList, this);
     if (ans == "")
         return;
     GAME = GameKlotski(ans);
