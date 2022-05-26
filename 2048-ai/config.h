@@ -11,7 +11,7 @@
 #define HAVE_CXX11 1
 
 /* Define to 1 if you have the `drand48' function. */
-#define HAVE_DRAND48 1
+/*#define HAVE_DRAND48 1*/
 
 /* Define to 1 if you have the <fcntl.h> header file. */
 #define HAVE_FCNTL_H 1

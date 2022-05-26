@@ -56,13 +56,13 @@ static inline row_t reverse_row(row_t row) {
 extern "C" {
 #endif
 
-DLL_PUBLIC void init_tables();
+void init_tables();
 
 typedef int (*get_move_func_t)(board_t);
-DLL_PUBLIC float score_toplevel_move(board_t board, int move);
-DLL_PUBLIC int find_best_move(board_t board);
-DLL_PUBLIC int ask_for_move(board_t board);
-DLL_PUBLIC void play_game(get_move_func_t get_move);
+float score_toplevel_move(board_t board, int move);
+int find_best_move(board_t board);
+int ask_for_move(board_t board);
+void play_game(get_move_func_t get_move);
 
 #ifdef __cplusplus
 }
