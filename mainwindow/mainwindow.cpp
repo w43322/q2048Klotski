@@ -112,6 +112,7 @@ void MainWindow::UpdateElement(const QString& name, const QString& content)
         {
             num=i;
             find=true;
+            break;
             //qDebug()<<Node.toElement().tagName();
         }
     }
