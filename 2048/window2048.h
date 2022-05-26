@@ -46,6 +46,7 @@ private slots:
 
 private:
     Ui::Window2048 *ui;
+    void SaveAndExit();
     void ProcessPress(uint8_t);
     void InitSetup();
     void KeepAspectRatio();

@@ -39,11 +39,14 @@ private:
     void SetHelpLabel();
     void LogIn();
     void SetWelcomeLabel();
+    void AddElement(const QString&, const QString&);
+    QString FindElement(const QString&);
     Ui::MainWindow *ui;
     Window2048 *uiWindow2048;
     WindowKlotski *uiWindowKlotski;
 
     QDomDocument mydoc;
+    QDomElement curuser;
     QString userName;
 
     friend class Window2048;

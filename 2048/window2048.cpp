@@ -89,11 +89,11 @@ void Window2048::on_pushButtonAuto_clicked()
     ui->pushButtonStop->setEnabled(true);
     while (aut0)
     {
+        Sleep(!anim);
         uint8_t mov = bestMove;
         if (!mov)
             break;
         ProcessPress(mov);
-        Sleep(!anim);
     }
 }
 
@@ -355,12 +355,20 @@ void Window2048::ProcessPress(uint8_t direction)
         if(ans == QMessageBox::Yes)
             on_pushButtonNewGame_clicked();
         else
-        {
-            ((MainWindow*)parent())->show();
-            hide();
-            delete this;
-        }
+            SaveAndExit();
     }
+}
+
+void Window2048::SaveAndExit()
+{
+    // Save
+    ((MainWindow*)parent())->AddElement("score", "100");
+
+    // Exit
+    ((MainWindow*)parent())->show();
+    hide();
+    delete this;
+    return;
 }
 
 void Window2048::keyPressEvent(QKeyEvent *event)
@@ -383,10 +391,8 @@ void Window2048::keyPressEvent(QKeyEvent *event)
         ProcessPress('d');
         break;
     case Qt::Key_Escape:
-        ((MainWindow*)parent())->show();
-        hide();
-        delete this;
-        return;
+        SaveAndExit();
+        break;
     default:
         return;
     }
