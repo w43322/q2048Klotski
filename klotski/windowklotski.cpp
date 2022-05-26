@@ -88,30 +88,38 @@ void WindowKlotski::keyPressEvent(QKeyEvent *event)
     {
     case Qt::Key_Up:
         SelectedLoc = GAME.NextAdjUp(SelectedLoc);
+        DrawGridOfLabels();
         break;
     case Qt::Key_Left:
         SelectedLoc = GAME.NextAdjLeft(SelectedLoc);
+        DrawGridOfLabels();
         break;
     case Qt::Key_Down:
         SelectedLoc = GAME.NextAdjDown(SelectedLoc);
+        DrawGridOfLabels();
         break;
     case Qt::Key_Right:
         SelectedLoc = GAME.NextAdjRight(SelectedLoc);
+        DrawGridOfLabels();
         break;
     case Qt::Key_W:
         SelectedLoc = GAME.Move(SelectedLoc,'w');
+        DrawGridOfLabels();
         AfterMove();
         break;
     case Qt::Key_A:
         SelectedLoc = GAME.Move(SelectedLoc,'a');
+        DrawGridOfLabels();
         AfterMove();
         break;
     case Qt::Key_S:
         SelectedLoc = GAME.Move(SelectedLoc,'s');
+        DrawGridOfLabels();
         AfterMove();
         break;
     case Qt::Key_D:
         SelectedLoc = GAME.Move(SelectedLoc,'d');
+        DrawGridOfLabels();
         AfterMove();
         break;
     case Qt::Key_Escape:
@@ -122,8 +130,6 @@ void WindowKlotski::keyPressEvent(QKeyEvent *event)
     default:
         return;
     }
-    SetStep();
-    DrawGridOfLabels();
 }
 
 void WindowKlotski::closeEvent(QCloseEvent *e)
