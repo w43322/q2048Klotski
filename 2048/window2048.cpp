@@ -363,6 +363,7 @@ void Window2048::SaveAndExit()
 {
     // Save
     ((MainWindow*)parent())->UpdateElement("Score2048", QString::number(GAME.GetScore()));
+    ((MainWindow*)parent())->UpdateElement("GameTime2048", QString::number(gameTime.elapsed()));
 
     // Exit
     ((MainWindow*)parent())->show();
