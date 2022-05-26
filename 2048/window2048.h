@@ -25,6 +25,7 @@ class Window2048 : public QMainWindow
 
 public:
     explicit Window2048(QWidget *parent = nullptr, uint8_t wid = 4, uint8_t hei = 4);
+    explicit Window2048(QWidget *parent = nullptr, const QString& str = "");
     ~Window2048();
     static uint8_t AskFor(const QString& Title,
                            const QString& Label,
@@ -46,7 +47,8 @@ private slots:
 
 private:
     Ui::Window2048 *ui;
-    void SaveAndExit();
+    void Save();
+    void Exit();
     void ProcessPress(uint8_t);
     void InitSetup();
     void KeepAspectRatio();

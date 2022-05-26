@@ -10,8 +10,8 @@
     </user>
     <user id="3">
         <username>1</username>
-        <password>1</password>
-        <Score2048>104</Score2048>
-        <GameTime2048>11496</GameTime2048>
+        <password>1<GameTime2048>9108</GameTime2048>
+        </password>
+        <Score2048>2892</Score2048>
     </user>
 </UserAccount>

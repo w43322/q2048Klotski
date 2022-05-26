@@ -1,4 +1,26 @@
 #include "2048.h"
+QString Game2048::ToQString()
+{
+    QString res;
+    res += QString::number(GetWidth()) + ",";
+    res += QString::number(GetHeight()) + ",";
+    for (uint8_t i = 0; i < GetWidth(); ++i)
+        for (uint8_t j = 0; j < GetHeight(); ++j)
+            res += QString::number(grid.GetTileVal(make_pair(i, j))) + ",";
+    res.chop(1);
+    return res;
+}
+Grid2048::Grid2048(const QString& grid_str) : BaseGrid(grid_str.split(',')[0].toUInt(), grid_str.split(',')[1].toUInt())
+{
+    QStringList gridData = grid_str.split(',');
+    uint16_t x = 2;
+    for (uint8_t i = 0; i < gridData[1].toUInt(); ++i)
+        for (uint8_t j = 0; j < gridData[0].toUInt(); ++j, ++x)
+        {
+            auto loc = make_pair(i, j);
+            SetTileVal(loc, gridData[x].toUInt());
+        }
+}
 bool Grid2048::IsFull()
 {
     for (uint8_t i = 0; i < height; ++i)
@@ -154,6 +176,10 @@ void Grid2048::HorizontalMirror()
 Game2048::Game2048(uint8_t _w, uint8_t _h) : grid(_w, _h), score(0)
 {
     InitBoard();
+    init_tables();
+}
+Game2048::Game2048(const QString& gridstr, uint32_t sco) : grid(gridstr), score(sco)
+{
     init_tables();
 }
 bool Game2048::GameOver()

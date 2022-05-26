@@ -12,6 +12,15 @@ Window2048::Window2048(QWidget *parent, uint8_t wid, uint8_t hei) :
     InitSetup();
 }
 
+Window2048::Window2048(QWidget *parent, const QString& str) :
+    QMainWindow(parent)
+    , ui(new Ui::Window2048)
+    , GAME(str, ((MainWindow*)parent)->FindElement("Score2048").toUInt())
+{
+    ui->setupUi(this);
+    InitSetup();
+}
+
 Window2048::~Window2048()
 {
     on_pushButtonStop_clicked();
@@ -355,17 +364,22 @@ void Window2048::ProcessPress(uint8_t direction)
         if(ans == QMessageBox::Yes)
             on_pushButtonNewGame_clicked();
         else
-            SaveAndExit();
+        {
+            Save();
+            Exit();
+        }
     }
 }
 
-void Window2048::SaveAndExit()
+void Window2048::Save()
 {
-    // Save
     ((MainWindow*)parent())->UpdateElement("Score2048", QString::number(GAME.GetScore()));
     ((MainWindow*)parent())->UpdateElement("GameTime2048", QString::number(gameTime.elapsed()));
+    ((MainWindow*)parent())->UpdateElement("Grid2048", GAME.ToQString());
+}
 
-    // Exit
+void Window2048::Exit()
+{
     ((MainWindow*)parent())->show();
     hide();
     delete this;
@@ -392,7 +406,8 @@ void Window2048::keyPressEvent(QKeyEvent *event)
         ProcessPress('d');
         break;
     case Qt::Key_Escape:
-        SaveAndExit();
+        Save();
+        Exit();
         break;
     default:
         return;
@@ -409,7 +424,10 @@ void Window2048::closeEvent(QCloseEvent *e)
                 "Are you sure to quit this application?",
                 QMessageBox::Yes, QMessageBox::No);
     if(ans == QMessageBox::Yes)
+    {
+        Save();
         e->accept();
+    }
     else
         e->ignore();
 }

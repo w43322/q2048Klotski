@@ -21,13 +21,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonRun2048_clicked()
 {
-    auto wid = Window2048::AskFor("Width", "Please Select Width:", {"4","3","5","6","7","8","9","10"}, this);
-    if (!wid)
-        return;
-    auto hei = Window2048::AskFor("Height", "Please Select Height:", {"4","3","5","6","7","8","9","10"}, this);
-    if (!hei)
-        return;
-    uiWindow2048 = new Window2048(this, wid, hei);
+    QString dbLookupRes = FindElement("Grid2048");
+    if (dbLookupRes == "")
+    {
+        auto wid = Window2048::AskFor("Width", "Please Select Width:", {"4","3","5","6","7","8","9","10"}, this);
+        if (!wid)
+            return;
+        auto hei = Window2048::AskFor("Height", "Please Select Height:", {"4","3","5","6","7","8","9","10"}, this);
+        if (!hei)
+            return;
+        uiWindow2048 = new Window2048(this, wid, hei);
+    }
+    else
+    {
+        uiWindow2048 = new Window2048(this, dbLookupRes);
+    }
     uiWindow2048->show();
     hide();
 }
@@ -93,6 +101,7 @@ void MainWindow::UpdateElement(const QString& name, const QString& content)
 {
     //printf("start\n");
     //qDebug()<<curuser.tagName();
+    qDebug() << name << content;
     QDomNodeList userList=curuser.childNodes();
     bool find=false;
     QDomNode Node;
@@ -102,7 +111,7 @@ void MainWindow::UpdateElement(const QString& name, const QString& content)
         if(name==Node.toElement().tagName())
         {
             find=true;
-            //qDebug()<<Node.toElement().tagName();
+            qDebug()<<Node.toElement().tagName();
         }
     }
     if(!find)
@@ -120,6 +129,7 @@ void MainWindow::UpdateElement(const QString& name, const QString& content)
         QDomNode newnode = Node.firstChild();
         Node.replaceChild(newnode,oldnode);
     }
+
     QFile file("./xml/database.xml");
     if(!(file.open(QIODevice::WriteOnly | QIODevice::Truncate)))
     {

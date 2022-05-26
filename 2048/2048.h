@@ -4,11 +4,15 @@
 #include "base/base.h"
 #include "2048-ai/2048ai.h"
 
+#include <QString>
+#include <QStringList>
+
 class Grid2048 : public BaseGrid
 {
 public:
     //void DebugPrintGrid();
     Grid2048(uint8_t _w, uint8_t _h): BaseGrid(_w, _h){}
+    Grid2048(const QString& grid_str);
     bool IsFull();
     void PutNewTileOnRandomLocation();
     PairOfInt8 GetRandomEmptyLocation();
@@ -28,6 +32,7 @@ class Game2048
 {
 public:
     Game2048(uint8_t _w, uint8_t _h);
+    Game2048(const QString& gridstr, uint32_t sco);
     bool GameOver();
     void InitBoard();
     //void Print();
@@ -38,9 +43,9 @@ public:
     //const Grid2048& GetGrid(){return grid;}
     uint8_t GetTileVal(PairOfInt8 loc){return grid.GetTileVal(loc);}
     uint8_t GetBestMove();
+    QString ToQString();
 private:
     Grid2048 grid;
     uint32_t score = 0;
-
 };
 #endif // _2048_H
