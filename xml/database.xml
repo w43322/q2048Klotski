@@ -11,6 +11,6 @@
     <user id="3">
         <username>1</username>
         <password>1</password>
-        <score>100</score>
+        <Score2048>0</Score2048>
     </user>
 </UserAccount>

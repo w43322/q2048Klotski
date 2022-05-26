@@ -89,20 +89,41 @@ void MainWindow::LogIn()
     file.close();
 }
 
-void MainWindow::AddElement(const QString& name, const QString& content)
+void MainWindow::UpdateElement(const QString& name, const QString& content)
 {
-    qDebug() << name << content;
     //printf("start\n");
-    qDebug()<<curuser.tagName();
-    QDomElement node=mydoc.createElement(name);
-    QDomText text=mydoc.createTextNode(content);
-    text.setData(content);
-    node.appendChild(text);
-    curuser.appendChild(node);
-    QFile file("./xml/database.xml");
-    if(!(file.open(QIODevice::ReadWrite | QIODevice::Truncate)))
+    //qDebug()<<curuser.tagName();
+    QDomNodeList userList=curuser.childNodes();
+    bool find=false;
+    QDomNode Node;
+    for(int i=0;i<userList.count();i++)
     {
-        qDebug("false\n");
+        Node=userList.at(i);
+        if(name==Node.toElement().tagName())
+        {
+            find=true;
+            //qDebug()<<Node.toElement().tagName();
+        }
+    }
+    if(!find)
+    {
+        QDomElement node=mydoc.createElement(name);
+        QDomText text=mydoc.createTextNode(content);
+        text.setData(content);
+        node.appendChild(text);
+        curuser.appendChild(node);
+    }
+    else
+    {
+        QDomNode oldnode = Node.firstChild();
+        Node.firstChild().setNodeValue(content);
+        QDomNode newnode = Node.firstChild();
+        Node.replaceChild(newnode,oldnode);
+    }
+    QFile file("./xml/database.xml");
+    if(!(file.open(QIODevice::WriteOnly | QIODevice::Truncate)))
+    {
+        //printf("false\n");
         return;
     }
     QTextStream out(&file);

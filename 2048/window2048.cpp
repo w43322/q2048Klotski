@@ -362,7 +362,7 @@ void Window2048::ProcessPress(uint8_t direction)
 void Window2048::SaveAndExit()
 {
     // Save
-    ((MainWindow*)parent())->AddElement("score", "100");
+    ((MainWindow*)parent())->UpdateElement("Score2048", QString::number(GAME.GetScore()));
 
     // Exit
     ((MainWindow*)parent())->show();
