@@ -370,26 +370,25 @@ void Window2048::keyPressEvent(QKeyEvent *event)
     Game2048 lastGameState = GAME;
     switch (event->key())
     {
-        case Qt::Key_W:case Qt::Key_Up:
-            ProcessPress('w');
-            break;
-        case Qt::Key_A:case Qt::Key_Left:
-            ProcessPress('a');
-            break;
-        case Qt::Key_S:case Qt::Key_Down:
-            ProcessPress('s');
-            break;
-        case Qt::Key_D:case Qt::Key_Right:
-            ProcessPress('d');
-            break;
-        case Qt::Key_Escape:
-            ((MainWindow*)parent())->show();
-            hide();
-            delete this;
-            return;
+    case Qt::Key_W:case Qt::Key_Up:
+        ProcessPress('w');
+        break;
+    case Qt::Key_A:case Qt::Key_Left:
+        ProcessPress('a');
+        break;
+    case Qt::Key_S:case Qt::Key_Down:
+        ProcessPress('s');
+        break;
+    case Qt::Key_D:case Qt::Key_Right:
+        ProcessPress('d');
+        break;
+    case Qt::Key_Escape:
+        ((MainWindow*)parent())->show();
+        hide();
+        delete this;
+        return;
     default:
-            //qDebug() << event->key() << endl;
-            break;
+        return;
     }
 }
 

@@ -48,6 +48,7 @@ class GameKlotski
 public:
     GameKlotski(const QString&);
     //void Print();
+    bool GameOver();
     uint32_t GetStep(){return step;}
     uint8_t GetWidth(){return grid.GetWidth();}
     uint8_t GetHeight(){return grid.GetHeight();}
@@ -62,14 +63,11 @@ public:
     PairOfInt8 NextAdjDown(PairOfInt8 loc);
     PairOfInt8 NextAdjLeft(PairOfInt8 loc);
     PairOfInt8 NextAdjRight(PairOfInt8 loc);
-    map<QString, QStringList> GameSetData =
-    {
-        {"横刀立马",{"4", "5", "1,0,0,1,2|0,0,1,2,2|1,0,3,1,2|1,2,0,1,2|2,2,1,2,1|1,2,3,1,2|3,3,1,1,1|3,3,2,1,1|3,4,0,1,1|3,4,3,1,1", "0,3,1"}},
-        {"指挥若定",{"4", "5", "1,0,0,1,2|0,0,1,2,2|1,0,3,1,2|3,2,0,1,1|2,2,1,2,1|3,2,3,1,1|1,3,0,1,2|3,3,1,1,1|3,3,2,1,1|1,3,3,1,2", "0,3,1"}},
-        {"数字华容道",{"4", "4", "NUMBERRAND", "NUMBERWIN"}}
-    };
 private:
     GridKlotski grid;
     uint32_t step = 0;
+    std::deque<std::tuple<uint8_t, uint8_t, uint8_t> >winCondition ;
+    static const map<QString, QStringList> GameSetData;
 };
+
 #endif // KLOTSKI_H

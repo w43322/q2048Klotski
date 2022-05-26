@@ -1,42 +1,61 @@
 #include "klotski.h"
 
+const map<QString, QStringList> GameKlotski::GameSetData =
+   {
+       //          wid  hei  number, row, col, wid, hei | ...                                             win condition - num, (at) row, col
+       {"横刀立马",{"4", "5", "1,0,0,1,2|0,0,1,2,2|1,0,3,1,2|1,2,0,1,2|2,2,1,2,1|1,2,3,1,2|3,3,1,1,1|3,3,2,1,1|3,4,0,1,1|3,4,3,1,1", "0,3,1"}},
+       {"指挥若定",{"4", "5", "1,0,0,1,2|0,0,1,2,2|1,0,3,1,2|3,2,0,1,1|2,2,1,2,1|3,2,3,1,1|1,3,0,1,2|3,3,1,1,1|3,3,2,1,1|1,3,3,1,2", "0,3,1"}},
+       {"数字华容道",{"4", "4", "NUMBERRAND", "1,0,0|2,0,1|3,0,2|4,0,3|5,1,0|6,1,1|7,1,2|8,1,3|9,2,0|10,2,1|11,2,2|12,2,3|13,3,0|14,3,1|15,3,2"}}
+   };
+
 void GridKlotski::SetTile(uint8_t val, uint8_t i, uint8_t j, uint8_t wid, uint8_t hei)
 {
     PairOfInt8 loc = make_pair(i, j);
     data[loc] = TileKlotski(val, wid, hei);
 }
 
-GameKlotski::GameKlotski(const QString& gs) : grid(GameSetData[gs][0].toUInt(), GameSetData[gs][1].toUInt())
+GameKlotski::GameKlotski(const QString& gs) : grid(GameSetData.at(gs)[0].toUInt(), GameSetData.at(gs)[1].toUInt())
 {
+    // Set Initial Grid
     grid.ClearGrid();
-    //qDebug() << GameSetData[gs][0].toUInt() << GameSetData[gs][1].toUInt();
-    auto GameSet = GameSetData[gs];
+    auto&& GameSet = GameSetData.at(gs);
     if (GameSet[2] == "NUMBERRAND")
     {
         for (uint8_t num = 1; num < GetWidth() * GetHeight(); ++num)
         {
-            uint8_t i = rand() % GetHeight();
-            uint8_t j = rand() % GetWidth();
+            uint8_t i = arc4random() % GetHeight();
+            uint8_t j = arc4random() % GetWidth();
             while (grid.GetTileVal(make_pair(i, j)) != 0)
             {
-                i = rand() % GetHeight();
-                j = rand() % GetWidth();
+                i = arc4random() % GetHeight();
+                j = arc4random() % GetWidth();
             }
-            //qDebug() << num << ":" << i << j;
             grid.SetTile(num, i, j, 1, 1);
         }
-        return;
     }
-    QStringList Tiles = GameSet[2].split('|');
-    for(auto &&line:Tiles)
+    else
     {
-        //qDebug() << line;
-        QStringList TileProperties = line.split(',');
-        grid.SetTile(TileProperties[0].toUInt(),
-                TileProperties[1].toUInt(),
-                TileProperties[2].toUInt(),
-                TileProperties[3].toUInt(),
-                TileProperties[4].toUInt());
+        QStringList Tiles = GameSet[2].split('|');
+        for (auto&& line : Tiles)
+        {
+            QStringList TileProperties = line.split(',');
+            grid.SetTile(TileProperties[0].toUInt(),
+                    TileProperties[1].toUInt(),
+                    TileProperties[2].toUInt(),
+                    TileProperties[3].toUInt(),
+                    TileProperties[4].toUInt());
+        }
+    }
+
+    // Set Win Condition
+    QStringList winConds = GameSet[3].split('|');
+    for (auto&& winCond : winConds)
+    {
+        QStringList winCondPart = winCond.split(',');
+        winCondition.push_back(std::make_tuple(
+                                   winCondPart[0].toUInt(),
+                                   winCondPart[1].toUInt(),
+                                   winCondPart[2].toUInt()));
     }
 }
 
@@ -218,4 +237,16 @@ PairOfInt8 GameKlotski::NextAdjDown(PairOfInt8 loc)
         }
         j = 0;
     }
+}
+
+bool GameKlotski::GameOver()
+{
+    for (auto&& winCond : winCondition)
+    {
+        auto loc = make_pair(std::get<1>(winCond), std::get<2>(winCond));
+        if (grid.GetTileVal(loc) != std::get<0>(winCond))
+            return false;
+        //qDebug() << loc;
+    }
+    return true;
 }

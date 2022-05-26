@@ -41,6 +41,7 @@ private:
     void DrawGridOfLabels();
     void KeepAspectRatio();
     void SetBorderLenAndTileLen();
+    void AfterMove();
     Ui::WindowKlotski *ui;
     map<PairOfInt8, QLabel> GridOfLabels;
     PairOfInt8 SelectedLoc;

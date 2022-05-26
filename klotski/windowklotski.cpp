@@ -56,6 +56,25 @@ QString WindowKlotski::AskFor(const QString& Title,
     return isok ? STR : "";
 }
 
+void WindowKlotski::AfterMove()
+{
+    if (!GAME.GameOver())
+        return;
+    auto ans = QMessageBox::question(
+                this,
+                "Game Over!",
+                "Your game is over :(\nDo you want to restart?",
+                QMessageBox::No, QMessageBox::Yes);
+    if(ans == QMessageBox::Yes)
+        on_pushButton_clicked();
+    else
+    {
+        ((MainWindow*)parent())->show();
+        hide();
+        delete this;
+    }
+}
+
 void WindowKlotski::resizeEvent(QResizeEvent *event)
 {
     event->accept();
@@ -66,38 +85,41 @@ void WindowKlotski::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key())
     {
-        case Qt::Key_Up:
-            SelectedLoc = GAME.NextAdjUp(SelectedLoc);
-            break;
-        case Qt::Key_Left:
-            SelectedLoc = GAME.NextAdjLeft(SelectedLoc);
-            break;
-        case Qt::Key_Down:
-            SelectedLoc = GAME.NextAdjDown(SelectedLoc);
-            break;
-        case Qt::Key_Right:
-            SelectedLoc = GAME.NextAdjRight(SelectedLoc);
-            break;
-        case Qt::Key_W:
-            SelectedLoc = GAME.Move(SelectedLoc,'w');
-            break;
-        case Qt::Key_A:
-            SelectedLoc = GAME.Move(SelectedLoc,'a');
-            break;
-        case Qt::Key_S:
-            SelectedLoc = GAME.Move(SelectedLoc,'s');
-            break;
-        case Qt::Key_D:
-            SelectedLoc = GAME.Move(SelectedLoc,'d');
-            break;
-        case Qt::Key_Escape:
-            ((MainWindow*)parent())->show();
-            hide();
-            delete this;
-            return;
+    case Qt::Key_Up:
+        SelectedLoc = GAME.NextAdjUp(SelectedLoc);
+        break;
+    case Qt::Key_Left:
+        SelectedLoc = GAME.NextAdjLeft(SelectedLoc);
+        break;
+    case Qt::Key_Down:
+        SelectedLoc = GAME.NextAdjDown(SelectedLoc);
+        break;
+    case Qt::Key_Right:
+        SelectedLoc = GAME.NextAdjRight(SelectedLoc);
+        break;
+    case Qt::Key_W:
+        SelectedLoc = GAME.Move(SelectedLoc,'w');
+        AfterMove();
+        break;
+    case Qt::Key_A:
+        SelectedLoc = GAME.Move(SelectedLoc,'a');
+        AfterMove();
+        break;
+    case Qt::Key_S:
+        SelectedLoc = GAME.Move(SelectedLoc,'s');
+        AfterMove();
+        break;
+    case Qt::Key_D:
+        SelectedLoc = GAME.Move(SelectedLoc,'d');
+        AfterMove();
+        break;
+    case Qt::Key_Escape:
+        ((MainWindow*)parent())->show();
+        hide();
+        delete this;
+        return;
     default:
-            //qDebug() << event->key() << endl;
-            break;
+        return;
     }
     SetStep();
     DrawGridOfLabels();
