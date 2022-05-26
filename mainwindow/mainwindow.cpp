@@ -97,22 +97,22 @@ void MainWindow::LogIn()
     file.close();
 }
 
-void MainWindow::AddElement(const QString& name, const QString& content)
+void MainWindow::UpdateElement(const QString& name, const QString& content)
 {
-    qDebug() << name << content;
     //printf("start\n");
     //qDebug()<<curuser.tagName();
-    qDebug() << name << content;
     QDomNodeList userList=curuser.childNodes();
     bool find=false;
     QDomNode Node;
+    int num;
     for(int i=0;i<userList.count();i++)
     {
         Node=userList.at(i);
         if(name==Node.toElement().tagName())
         {
+            num=i;
             find=true;
-            qDebug()<<Node.toElement().tagName();
+            //qDebug()<<Node.toElement().tagName();
         }
     }
     if(!find)
@@ -129,8 +129,8 @@ void MainWindow::AddElement(const QString& name, const QString& content)
         Node.firstChild().setNodeValue(content);
         QDomNode newnode = Node.firstChild();
         Node.replaceChild(newnode,oldnode);
+        curuser.childNodes().at(num)=Node;
     }
-
     QFile file("./xml/database.xml");
     if(!(file.open(QIODevice::WriteOnly | QIODevice::Truncate)))
     {
