@@ -52,9 +52,22 @@ void MainWindow::on_pushButtonRunKlotski_clicked()
 
 void MainWindow::LogIn()
 {
+    //qDebug()<<"LogIn";
     QString uname, pword;
     QFile file(":/xml/database.xml");  //创建XML文件对象
+    /*
+    if(!(file.open(QIODevice::ReadOnly)))
+    {
+        qDebug("false");
+        return;
+    }
+    else
+    {
+        qDebug("success");
+    }
+    */
     mydoc.setContent(&file);  //将XML对象赋给QdomDocument类型的Qt文档句柄
+    //file.close();
     QDomElement root = mydoc.documentElement();  //获取XML文档的DOM根元素
     if(root.hasChildNodes())
     {
@@ -78,15 +91,32 @@ void MainWindow::LogIn()
                     ui->passwordEdit->setFocus();
                     return;
                 }
+                break;
             }
         } //for
         if(!exist)
         {
-            QMessageBox::warning(0, QObject::tr("failed"), "此用户不存在，请重新输入！");
-            ui->userNameEdit->clear();
-            ui->passwordEdit->clear();
-            ui->userNameEdit->setFocus();
-            return;
+            auto ans = QMessageBox::question(
+                        this,
+                        "fail!",
+                        "未找到该用户\n是否新注册用户?",
+                        QMessageBox::No, QMessageBox::Yes);
+            if(ans == QMessageBox::No)
+            {
+                QMessageBox::warning(0, QObject::tr("failed"), "此用户不存在，请重新输入！");
+                ui->userNameEdit->clear();
+                ui->passwordEdit->clear();
+                ui->userNameEdit->setFocus();
+                return;
+            }
+            if(ans == QMessageBox::Yes)
+            {
+                QString user = ui->userNameEdit->text();
+                QString pword = ui->passwordEdit->text();
+                userRegister(user,pword);
+                QMessageBox::warning(0, QObject::tr("success"), "注册成功，请重新登录");
+                return;
+            }
         }
        //用户存在且密码验证通过
         userName = uname;
@@ -126,6 +156,7 @@ void MainWindow::UpdateElement(const QString& name, const QString& content)
     }
     else
     {
+        //qDebug()<<Node.toElement().tagName();
         QDomNode oldnode = Node.firstChild();
         Node.firstChild().setNodeValue(content);
         QDomNode newnode = Node.firstChild();
@@ -154,6 +185,31 @@ QString MainWindow::FindElement(const QString& element)
             return Node.toElement().text();
     }
     return "";
+}
+
+void MainWindow::userRegister(const QString& name,const QString& password)
+{
+    QDomElement root = mydoc.documentElement();
+    QDomElement node=mydoc.createElement("user");
+    QDomElement user=mydoc.createElement("username");
+    QDomText username=mydoc.createTextNode(name);
+    user.appendChild(username);
+    QDomElement pword=mydoc.createElement("password");
+    QDomText pwordtext=mydoc.createTextNode(password);
+    pword.appendChild(pwordtext);
+    node.appendChild(user);
+    node.appendChild(pword);
+    root.appendChild(node);
+    QFile file("./xml/database.xml");
+    if(!(file.open(QIODevice::WriteOnly | QIODevice::Truncate)))
+    {
+        //printf("false\n");
+        return;
+    }
+    QTextStream out(&file);
+    mydoc.save(out,4);
+    file.close();
+    return;
 }
 
 void MainWindow::on_loginBtn_clicked()

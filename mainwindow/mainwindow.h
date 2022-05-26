@@ -40,6 +40,7 @@ private:
     void LogIn();
     void SetWelcomeLabel();
     void UpdateElement(const QString&, const QString&);
+    void userRegister(const QString&,const QString&);
     QString FindElement(const QString&);
     Ui::MainWindow *ui;
     Window2048 *uiWindow2048;
