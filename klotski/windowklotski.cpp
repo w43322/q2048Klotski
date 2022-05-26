@@ -72,7 +72,6 @@ void WindowKlotski::AfterMove()
         ((MainWindow*)parent())->show();
         hide();
         delete this;
-        return;
     }
 }
 
