@@ -18,6 +18,7 @@ Window2048::Window2048(QWidget *parent, const QString& str) :
     , GAME(str, ((MainWindow*)parent)->FindElement("Score2048").toUInt())
 {
     ui->setupUi(this);
+    gameTimeDelta = ((MainWindow*)parent)->FindElement("GameTime2048").toUInt();
     InitSetup();
 }
 
@@ -29,6 +30,9 @@ Window2048::~Window2048()
 
 void Window2048::InitSetup()
 {
+    nowGame = 0;
+    previousGames.clear();
+    previousGames.push_back(GAME);
     connect(&timer, SIGNAL(timeout()), this, SLOT(SetTime()));
     gameTime.start();
     timer.start(1000);
@@ -47,6 +51,17 @@ void Window2048::InitSetup()
         ui->pushButtonHint->hide();
     else
         ui->pushButtonHint->show();
+}
+
+void Window2048::Undo()
+{
+    if (nowGame)
+    {
+        --nowGame;
+        GAME = previousGames[nowGame];
+        SetScore();
+        DrawGridOfLabels();
+    }
 }
 
 void Window2048::on_pushButtonNewGame_clicked()
@@ -332,7 +347,7 @@ void Window2048::ProcessPress(uint8_t direction)
 {
     if (anim)
     {
-        ui->checkBox->setEnabled(aut0|false);
+        ui->checkBox->setEnabled(aut0);
         inAnimation = true;
         Grid2048 oldGrid = AnimateParallelMove(direction);
         GAME.Step(direction);
@@ -349,6 +364,19 @@ void Window2048::ProcessPress(uint8_t direction)
     SetScore();
     if (hint)
         SetHint();
+
+    // Update undo Queue
+    if (!(GAME == previousGames.back()))
+    {
+        if (nowGame == 255)
+            previousGames.pop_front();
+        else
+            ++nowGame;
+        if (nowGame < previousGames.size())
+            previousGames[nowGame] = GAME;
+        else
+            previousGames.push_back(GAME);
+    }
 
     // Game Over Logic
     if (GAME.GameOver())
@@ -404,6 +432,9 @@ void Window2048::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_D:case Qt::Key_Right:
         ProcessPress('d');
+        break;
+    case Qt::Key_Z:
+        Undo();
         break;
     case Qt::Key_Escape:
         Save();
@@ -503,7 +534,7 @@ void Window2048::SetTime()
     "color: white;'";
     QString TEXT = "<font " + STYLE1 + ">TIME</font><br/>";
     TEXT += "<font " + STYLE2 + ">";
-    TEXT += QDateTime::fromMSecsSinceEpoch(gameTime.elapsed(), Qt::UTC).toString("mm:ss") + "</font>";
+    TEXT += QDateTime::fromMSecsSinceEpoch(gameTime.elapsed() + gameTimeDelta, Qt::UTC).toString("mm:ss") + "</font>";
     ui->labelTime->setText(TEXT);
 }
 

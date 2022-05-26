@@ -11,8 +11,8 @@
     <user id="3">
         <username>1</username>
         <password>1</password>
-        <Score2048>4492</Score2048>
-        <GameTime2048>13032</GameTime2048>
-        <Grid2048>4,4,6,7,9,10,4,2,1,2,2,2,1,1,2,3,2,1</Grid2048>
+        <Score2048>0</Score2048>
+        <GameTime2048>8160</GameTime2048>
+        <Grid2048>4,4,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0</Grid2048>
     </user>
 </UserAccount>

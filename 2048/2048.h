@@ -24,6 +24,7 @@ public:
     void HorizontalMirror();
     uint8_t GetTileVal(PairOfInt8 loc) const{return data.find(loc) == data.end() ? 0 : data.at(loc).GetVal();}
     void SetTileVal(PairOfInt8 loc, uint8_t val){data[loc].SetVal(val);}
+    bool operator==(const Grid2048 &other) const{return data == other.data;}
 private:
     map<PairOfInt8, BaseTile> data;
 };
@@ -44,6 +45,7 @@ public:
     uint8_t GetTileVal(PairOfInt8 loc){return grid.GetTileVal(loc);}
     uint8_t GetBestMove();
     QString ToQString();
+    bool operator==(const Game2048 &other) const{return grid == other.grid && score == other.score;}
 private:
     Grid2048 grid;
     uint32_t score = 0;
