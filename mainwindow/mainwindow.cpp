@@ -45,7 +45,7 @@ void MainWindow::on_pushButtonRunKlotski_clicked()
 void MainWindow::LogIn()
 {
     QString uname, pword;
-    QFile file(":/xml/database.xml");  //创建XML文件对象
+    QFile file("./xml/database.xml");  //创建XML文件对象
     mydoc.setContent(&file);  //将XML对象赋给QdomDocument类型的Qt文档句柄
     QDomElement root = mydoc.documentElement();  //获取XML文档的DOM根元素
     if(root.hasChildNodes())
@@ -99,7 +99,7 @@ void MainWindow::AddElement(const QString& name, const QString& content)
     text.setData(content);
     node.appendChild(text);
     curuser.appendChild(node);
-    QFile file(":/xml/database.xml");
+    QFile file("./xml/database.xml");
     if(!(file.open(QIODevice::ReadWrite | QIODevice::Truncate)))
     {
         qDebug("false\n");
