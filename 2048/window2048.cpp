@@ -402,7 +402,7 @@ void Window2048::ProcessPress(uint8_t direction)
 void Window2048::Save()
 {
     ((MainWindow*)parent())->UpdateElement("Score2048", QString::number(GAME.GetScore()));
-    ((MainWindow*)parent())->UpdateElement("GameTime2048", QString::number(gameTime.elapsed()));
+    ((MainWindow*)parent())->UpdateElement("GameTime2048", QString::number(gameTime.elapsed() + gameTimeDelta));
     ((MainWindow*)parent())->UpdateElement("Grid2048", GAME.ToQString());
 }
 
