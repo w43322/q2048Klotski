@@ -61,6 +61,7 @@ void MainWindow::LogIn()
             pword = record.at(1).toElement().text(); //"password1","password2"
             if(uname == ui->userNameEdit->text())
             {
+                curuser=user.toElement();
                 exist = true;  //用户存在
                 if(!(pword == ui->passwordEdit->text()))
                 {
@@ -85,6 +86,41 @@ void MainWindow::LogIn()
         ui->afterLoginWidget->show();
         ui->beforeLoginWidget->hide();
     } //if
+    file.close();
+}
+
+void MainWindow::AddElement(const QString& name, const QString& content)
+{
+    qDebug() << name << content;
+    //printf("start\n");
+    qDebug()<<curuser.tagName();
+    QDomElement node=mydoc.createElement(name);
+    QDomText text=mydoc.createTextNode(content);
+    text.setData(content);
+    node.appendChild(text);
+    curuser.appendChild(node);
+    QFile file(":/xml/database.xml");
+    if(!(file.open(QIODevice::ReadWrite | QIODevice::Truncate)))
+    {
+        qDebug("false\n");
+        return;
+    }
+    QTextStream out(&file);
+    mydoc.save(out,4);
+    file.close();
+}
+
+QString MainWindow::FindElement(const QString& element)
+{
+    QDomNodeList userList=curuser.childNodes();
+    for(int i=0;i<userList.count();i++)
+    {
+        QDomNode Node=userList.at(i);
+        //qDebug()<<Node.toElement().text();
+        if(element==Node.toElement().tagName())
+            return Node.toElement().text();
+    }
+    return "";
 }
 
 void MainWindow::on_loginBtn_clicked()

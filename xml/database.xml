@@ -9,7 +9,7 @@
 			<password>password2</password>
 		</user>
 		<user id ="3">
-			<username></username>
-			<password></password>
+			<username>1</username>
+			<password>1</password>
 		</user>
 	</UserAccount>
