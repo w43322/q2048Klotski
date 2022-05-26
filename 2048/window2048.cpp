@@ -9,6 +9,7 @@ Window2048::Window2048(QWidget *parent, uint8_t wid, uint8_t hei) :
     , GAME(wid, hei)
 {
     ui->setupUi(this);
+    gameTimeDelta = 0;
     InitSetup();
 }
 
@@ -73,6 +74,7 @@ void Window2048::on_pushButtonNewGame_clicked()
     if (!hei)
         return;
     GAME = Game2048(wid, hei);
+    gameTimeDelta = 0;
     InitSetup();
 }
 
