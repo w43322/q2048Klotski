@@ -164,9 +164,13 @@ void MainWindow::UpdateElement(const QString& name, const QString& content)
         curuser.childNodes().at(num)=Node;
     }
     QFile file("./xml/database.xml");
-    if(!(file.open(QIODevice::WriteOnly | QIODevice::Truncate)))
+    try
     {
-        //printf("false\n");
+        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    }
+    catch (std::exception& e)
+    {
+        qDebug() << e.what();
         return;
     }
     QTextStream out(&file);
