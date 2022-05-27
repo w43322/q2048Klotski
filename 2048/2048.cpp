@@ -195,9 +195,7 @@ void Game2048::InitBoard()
 }
 uint8_t Game2048::GetBestMove()
 {
-    freopen("NUL", "w", stdout);
     uint8_t bestMove = find_best_move(grid.GetBoard());
-    freopen("CON", "w", stdout);
     switch (bestMove)
     {
     case 0: // up
