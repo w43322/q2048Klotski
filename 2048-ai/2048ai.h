@@ -6,17 +6,6 @@
 #include <stdlib.h>
 #include "platdefs.h"
 
-/* The fundamental trick: the 4x4 board is represented as a 64-bit word,
- * with each board square packed into a single 4-bit nibble.
- *
- * The maximum possible board value that can be supported is 32768 (2^15), but
- * this is a minor limitation as achieving 65536 is highly unlikely under normal circumstances.
- *
- * The space and computation savings from using this representation should be significant.
- *
- * The nibble shift can be computed as (r,c) -> shift (4*r + c). That is, (0,0) is the LSB.
- */
-
 typedef uint64_t board_t;
 typedef uint16_t row_t;
 
@@ -28,19 +17,6 @@ struct trans_table_entry_t{
 
 static const board_t ROW_MASK = 0xFFFFULL;
 static const board_t COL_MASK = 0x000F000F000F000FULL;
-
-static inline void print_board(board_t board) {
-    int i,j;
-    for(i=0; i<4; i++) {
-        for(j=0; j<4; j++) {
-            uint8_t powerVal = (board) & 0xf;
-            printf("%6u", (powerVal == 0) ? 0 : 1 << powerVal);
-            board >>= 4;
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
 
 static inline board_t unpack_col(row_t row) {
     board_t tmp = row;
